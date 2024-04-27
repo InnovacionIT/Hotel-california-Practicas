@@ -1,0 +1,33 @@
+h3{
+    text-align: center;
+    margin: 0 auto;
+    width: 50%;
+    height: 25%;
+}
+.btn-success{
+    margin: 0 auto;
+    font-size: var(--tamanio-fuente) ;
+    text-align: center;
+}
+.bannerExito{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: -80%;
+}
+.fa-circle-check{
+    margin: 8px;
+}
+.bannerError{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: -80%;
+}
+.fa-circle-xmark{
+    margin: 8px;
+}

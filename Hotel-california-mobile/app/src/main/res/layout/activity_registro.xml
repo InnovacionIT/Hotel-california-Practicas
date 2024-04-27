@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Registro">
+
+    <TextView
+        android:id="@+id/datosTarjetaText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:onClick="iraMainActivity"
+        android:text="Crear una cuenta"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/detallereservatext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="28dp"
+        android:minHeight="48dp"
+        android:onClick="iraMainActivity"
+        android:text="@string/ingres_tus_datos_o_logueate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datosTarjetaText" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="350dp"
+        android:layout_height="480dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="@color/azul"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detallereservatext"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/Usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="20sp"
+            android:gravity="center"
+            android:text="Usuario"
+            android:textColor="@color/white"
+            android:textColorLink="@color/naranja" />
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="330dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-165sp"
+            android:backgroundTint="@color/white"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="18dp">
+
+            <EditText
+                android:id="@+id/IngresarUsuario"
+                android:layout_width="289dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="Juan Pérez"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gris"
+                android:textColorLink="@color/clear"
+                tools:ignore="TextContrastCheck" />
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/fechanacimiento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="140sp"
+            android:text="Fecha de Nacimiento"
+            android:textColor="@color/white" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="330dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-45sp"
+            android:backgroundTint="@color/white"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="18dp">
+
+            <EditText
+                android:id="@+id/editfechaNacimiento"
+                android:layout_width="289dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="15/05/1986"
+                android:inputType="date"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gris"
+                android:textColorLink="@color/clear"
+                tools:ignore="TextContrastCheck" />
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="260sp"
+            android:text="Email"
+            android:textColor="@color/white" />
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="330dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="74sp"
+            android:backgroundTint="@color/white"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="18dp">
+
+            <EditText
+                android:id="@+id/introducirEmail"
+                android:layout_width="289dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="pepito@hotel.com"
+                android:inputType="text|textEmailAddress"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gris"
+                android:textColorLink="@color/clear"
+                tools:ignore="TextContrastCheck" />
+        </androidx.cardview.widget.CardView>
+
+
+
+        <TextView
+            android:id="@+id/pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="370sp"
+            android:text="@string/contrasena"
+            android:textColor="@color/white" />
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="330dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="180sp"
+            android:backgroundTint="@color/white"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="18dp">
+
+            <EditText
+                android:id="@+id/introducirPass"
+                android:layout_width="289dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="**********"
+                android:inputType="text|textPassword"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gris"
+                android:textColorLink="@color/clear"
+                tools:ignore="TextContrastCheck" />
+        </androidx.cardview.widget.CardView>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/CrearRegistro"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/naranja"
+        android:onClick="iraMainActivity"
+        android:text="Crear"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <ImageButton
+        android:id="@+id/volverHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:onClick="volverAMainActivity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?attr/homeAsUpIndicator"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+        android:contentDescription="volver" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

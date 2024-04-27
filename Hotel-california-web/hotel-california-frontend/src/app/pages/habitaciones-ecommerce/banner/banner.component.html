@@ -1,0 +1,14 @@
+<div class="bannerExito">
+    <i class="fa-solid fa-circle-check fa-lg" style="color: #28a745;"></i>
+    <br>
+    <h3>Su pago se realizado con éxito</h3>
+    <br>
+    <button type="button" class="btn btn-success" (click)="redirectToReservas()">Mis reservas</button>
+</div>
+
+<div class="bannerError" *ngIf="bannerError">
+    <i class="fa-solid fa-circle-xmark fa-lg" style="color: #dc3545;"></i>
+    <h3>No se ha podido procesar su pago</h3>
+    <br>
+    <p>Por favor intentelo nuevamente</p>
+</div>

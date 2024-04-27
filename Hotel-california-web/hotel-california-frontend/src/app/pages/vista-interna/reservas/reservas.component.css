@@ -1,0 +1,75 @@
+:root {
+  --color-principal: #33464e;
+  --primer-complementario: #afb0b1;
+  --segundo-complementario: #d7794a;
+  --tercer-complementario: #89553b;
+  --color-oscuro: #384043;
+  --color-claro: #dfe2e3;
+  --resaltador: #a3b4b9;
+  --shadow-complementario: 0 0 0 0.25rem rgba(51, 70, 78, 0.3);
+  --tamanio-fuente: 1.5rem;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+}
+
+
+.btn-lg{
+  background-color:  #da8053;
+}
+
+h1{
+text-align: center;
+}
+
+.thead-dark{
+background-color: var(--color-principal);
+
+}
+th{
+color: var(--color-claro);
+}
+.table{ 
+  width: 80%;
+  margin:0 auto;
+}
+.btn{
+  display: flex;
+  margin-right: 5px;
+  justify-content: center;
+  font-size: var(--tamanio-fuente);
+}
+.form{ 
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+h3{
+  text-align: center;
+  margin: 0 auto;
+  width: 50%;
+  height: 25%;
+}
+.btn-success{
+  margin: 0 auto;
+  font-size: var(--tamanio-fuente) ;
+  text-align: center;
+}
+.bannerExito{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 80%;
+}
+.fa-circle-check{
+  margin: 8px;
+}
+.bannerError{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: -80%;
+}

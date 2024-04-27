@@ -1,0 +1,36 @@
+[{
+    "Id": "1",
+    "nombre": "Romina",
+    "apellido": "Martinez",
+    "email": "romimartinez@gmail.com",
+    "password": "rm.1234",
+    "fechaNacimiento": "15/11/1989"
+},
+
+{
+    "Id": "2",
+    "nombre": "David",
+    "apellido": "Gimenez",
+    "email": "dgimenez@gmail.com",
+    "password": "dg.1234",
+    "fechaNacimiento": "10/04/1980"
+},
+
+{
+    "Id": "3",
+    "nombre": "Soraya",
+    "apellido": "Camillo",
+    "email": "camillosoy@gmail.com",
+    "password": "sc.1234",
+    "fechaNacimiento": "25/12/1975"
+},
+
+{
+    "Id": "4",
+    "nombre": "Francisco",
+    "apellido": "Lopez",
+    "email": "pancholopez1@gmail.com",
+    "password": "fl.1234",
+    "fechaNacimiento": "02/01/1995"
+}
+]

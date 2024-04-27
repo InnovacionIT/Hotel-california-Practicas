@@ -1,0 +1,127 @@
+Hola a todos! El presente tutorial, tiene como objetivo principal ser una guía práctica para todo aquel usuario que quisiera hacer funcionar el proyecto en su computadora personal.
+
+Aclaraciones importantes:
+
+El siguiente proyecto esta desarrollado con las siguientes tecnologías:
+* Framework Angular para desarrollo Frontend.
+* Framework Django para desarrollo Backend.
+* Base de datos Relacional Mysql/ Adm Phpmyadmin.
+
+Ante cualquier duda sobre las tecnologías anteriormente mencionadas, por favor dirigirse a las paginas oficiales correspondientes.
+
+El siguiente proyecto esta llevado a cabo completamente por los siguientes estudiantes del Instituto Superior Politécnico de Córdoba, de la carrera "Técnico en desarrollo web y aplicaciones digitales", Cohorte 2022 y su fin es meramente academico y no comercial.
+
+Integrantes del grupo:
+
+*Federico Gonzalez
+*Martin Garcia
+*Natalia Moroni
+*Victoria Avalos
+*Valentina Carrascal
+*Fernando Tadeo
+*Marcelo Cajal
+*Shirley Frassa
+
+Software/ Página web: Hotel California.
+
+Equipo : Innovación IT
+
+Ahora si, sin más los pasos correspondientes para hacer funcionar el proyecto a nivel local:
+
+Nota aclaratoria: 
+Como requisito fundamental, debe tener instalados GIT (https://git-scm.com/downloads), XAMPP (https://www.apachefriends.org/es/download.html) Python (https://www.python.org/downloads/), si no es así, por favor dirigirse a las páginas correspondientes oficiales y seguir los tutoriales elaborados a tal fin.
+
+Una vez cumplimentado el anterior item, proseguir con los siguientes pasos:
+
+1) Crear una carpeta y poner nombre de su preferencia, recomendable que sea en un lugar fácilmente accesible, como el escritorio de Windows o de su sistema operativo.
+
+2) Abrir su editor de código, preferentemente "Visual Studio Code" u otras alternativas como ser "Atom", "Brackets", "Sublime Text", etc.
+
+3) Abrir "Terminal" dentro de la carpeta creada.
+
+4) Ejecutar el siguiente comando : git clone "https://github.com/fertadeo/2023-Fullstack-Proyecto-Integrador/tree/main ".
+
+5) Ingresar a la carpeta descargada. (2023-FULLSTACK-PROYECTO-INTEGRADOR)
+
+6) Abrir nuevamente la "Terminal". Ingresar a la carpeta "HOTELCALIFORNIA2023" con el siguiente comando "cd .\HotelCalifornia2023\".
+
+7) Instalar Node Package Manager, con el siguiente comando "npm install". Esperar un momento a que se descarguen las librerías correspondientes.
+
+8) Una vez que surje el siguiente mensaje o similar: 
+
+###########################################################
+
+"added 1161 packages, and audited 1162 packages in 1m
+
+195 packages are looking for funding
+  run `npm fund` for details
+
+1 high severity vulnerability
+
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details. " 
+
+#############################################################
+
+Ejecutar el siguiente comando : "ng serve".
+
+9) Aparecerá el siguiente mensaje o similar: 
+
+#############################################################
+
+Build at: 2023-06-20T23:53:14.409Z - Hash: 259009c262019d4c - Time: 38265ms
+
+** Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
+
+
+√ Compiled successfully.
+
+#############################################################
+
+Abrir en cualquier navegador, ya sea "Chrome", "Firefox" o "Edge", la siguiente dirección URL: "http://localhost:4200/" (sin comillas)
+
+Debe aparecer la página principal del software "Hotel California".
+
+10) Ahora abriremos otra terminal en nuestro editor de texto, nos dirigiremos a la carpeta backend con los siguientes comandos: "cd .\HotelCalifornia2023\" y luego "cd .\BackendHotelCalifornia\".
+Entonces estaremos en la carpeta principal del backend, o lógica/ modelo de negocios de nuestro proyecto.
+
+11) Ejecutaremos el siguiente comando : "pip install -r requeriments.txt", para instalar las dependencias necesarias para levantar el proyecto del lado del servidor, nombradas en el archivo requeriments.txt.
+
+12) Abrir XAMPP desde el logo "INICIO" de windows o nuestro sistema operativo, recomendable tener acceso al panel de control con los servicios que nos ofrece XAMPP.
+
+13) Debemos levantar el servidor apache y el servicio Mysql, para eso apretamos "START" en ambas tecnologías del panel de control. Una vez que nos aseguremos que están los dos funcionales, ya que estarán resaltados en color verde y con un número especifico de puerto, vamos al siguiente paso:
+
+13.b) Debemos tener en cuenta que el usuario administrador por defecto con todos los permisos disponibles es admin@admin.com y la contraseña "1234" sin comillas.
+En el caso que queramos generar un nuevo administrador o super usuario, debemos situarnos en la carpeta principal del backend: (......\2023-Fullstack-Proyecto-Integrador\HotelCalifornia2023\BackendHotelCalifornia>) y allí en terminal ejecutar el siguiente comando: "python manage.py createsuperusuario.
+Entonces nos pedirá los siguientes datos:
+
+Usuario: nombre-usuario@gmail.com (Pusimos gmail como ejemplo, pero puede ser otro servicio de mensajería, lo indispensable es que tenga el símbolo "@")
+Nombre: nombre-usuario
+Apellido: apellido-usuario
+FechaDeNacimiento: aaaa-mm-dd (En el formato año mes dia, poner guión medio entre los números)
+Telefono: telefono-usuario
+Ciudad: ciudad-usuario
+Contraseña: telefono-usuario
+
+Si todos los datos ingresados son correctos, se mostrará el siguiente mensaje: 
+"Superuser created successfully."
+
+14) Una vez instaladas todas las dependencias necesarias y con el servidor apache de XAMPP levantado, el cual deja funcional y accesible nuestra base de datos, ejecutamos el comando en la terminal de nuestro editor de código, en la localización que nos quedamos en el PUNTO 10 (......\2023-Fullstack-Proyecto-Integrador\HotelCalifornia2023\BackendHotelCalifornia>): "python manage.py runserver"
+
+15) Debe aparecer un mensaje similar al siguiente:
+
+"System check identified no issues (0 silenced).
+June 20, 2023 - 21:26:07
+Django version 4.2.2, using settings 'BackendHotelCalifornia.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK."
+
+Ahora si, una vez Puesto en funcionamiento el FRONTEND (Angular), BACKEND (Django) Y BD (XAMPP), se puede utilizar y probar el sistema. (Refrescar en el navegador la pagina del hotel california para evitar cualquier inconveniente)
+
+Si experimenta alguna incidencia al seguir los pasos, por favor dirigirse al staff para que podamos guiarlo.
+
+Desde ya muchas gracias por su tiempo,
+
+ATTE Staff HOTEL CALIFORNIA - INNOVACION IT

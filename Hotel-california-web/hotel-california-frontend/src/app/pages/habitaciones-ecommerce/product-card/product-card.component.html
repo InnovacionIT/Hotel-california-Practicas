@@ -1,0 +1,57 @@
+<!-- Comando  en consiola para generar el componente: ng g c pages/habitaciones-ecommerce/product-card -->
+
+<div *ngFor="let habitacion of misHabitaciones; let i=index" class="card" >
+  <img src="../../../../assets/img/room01.jpg" class="card-img-top" alt="room1">
+  <div class="card-body">
+    <h4 class="card-title"> {{habitacion.tipoHabitacion}} </h4>
+    <div class="roomServices card-text">
+      {{ obtenerServicios(habitacion) }}
+      <ul class="serviceList">
+        <li class="service" *ngFor="let servicio of habitacion.servicios">{{ servicio }}</li> <!-- Mapeo del array de servicios -->
+      </ul>
+    </div>
+    <!-- <p class="card-text">{{habitacion.precio}}</p> -->
+    <a href="#" class="btn btnCalifornia" data-bs-toggle="modal" [attr.data-bs-target]="'#targetIdPunto'+i">Reservar</a>
+  </div>
+</div>
+
+<div *ngFor="let habitacion of misHabitaciones; let i=index" class="modal" tabindex="-1"id="{{ 'targetIdPunto' + i }}">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content contenidoModal p-3">
+      <div class="modal-header">
+        <h2 class="modal-title"> {{habitacion.tipoHabitacion}} </h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body row">
+        <div class="col-8 col-sm-12" *ngIf="mostrarInfo">
+          <img src="../../../../assets/img/room01.jpg" class="modalImg" alt={{habitacion.tipoHabitacion}}>
+          <img src={{habitacion.imagenes}} class="modalImg" alt="room1">
+          <div class="roomServices">
+            <ul class="serviceList">
+              <li class="service" *ngFor="let servicio of habitacion.servicios">{{ servicio }}</li> <!-- Mapeo del array de servicios -->
+            </ul>
+          </div>
+        </div>
+        <div class="col-4 col-sm-12 reservaForm" *ngIf="mostrarInfo" >
+
+          <label for="startDate">Desde:</label>
+            <input type="date" id="startDate" name="trip-start" [(ngModel)]="selectedStartDate">
+
+            <label for="leaveDate">Hasta:</label>
+            <input type="date" id="leaveDate" name="trip-end" [(ngModel)]="selectedLeaveDate">
+
+           <!--<div class="roomAvail" *ngIf="habitacion.disponible !== undefined"> {{ habitacion.disponible ? 'Disponible' : 'No disponible' }} </div>   <Verificación de disponibilidad reactiva -->
+            <div class="roomAvail">{{ habitacion.estado}} </div>
+          <div class="rommPrice"> Precio diario {{ habitacion.precio}}</div>
+
+          <div class="reservationPrice">
+            Precio Final de la Reserva desde {{selectedStartDate}} hasta {{selectedLeaveDate}}: {{ habitacion.precio * getDateDifference() }}.
+          </div>
+
+          <a  class="btn btnCalifornia" (click)="confirmReservation(habitacion.habitacionId)">Confirmar</a>  <!--  Llamada a la función confirmReservation con el id de la habitación -->
+
+        </div> <app-banner *ngIf="mostrarBanner"></app-banner><!--para mostrar banner-->
+      </div>
+    </div>
+  </div>
+</div>
