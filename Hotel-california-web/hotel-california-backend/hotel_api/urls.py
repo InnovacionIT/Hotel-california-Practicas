@@ -15,4 +15,5 @@ urlpatterns = [
     path('detallePago/<int:detallePagoId>/', DetallePagoView.as_view(), name='detalle_pago'),
     path('servicio/', ServicioView.as_view(), name='servicio'),
     path('servicio/<int:habitacionId>/', ServicioPorHabitacionView.as_view(), name='servicio_por_habitacion'),
+    path('consulta/', ServicioPorHabitacionView.as_view(), name='consulta'),
 ]

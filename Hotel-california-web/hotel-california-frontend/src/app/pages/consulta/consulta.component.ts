@@ -38,7 +38,7 @@ consultaEnviada: boolean = false;
   }
 
   onConsulta(event: Event): void {
-    event.preventDefault;
+    event.preventDefault();
     if (this.consultaForm.valid){
       console.log("Llamar al servicio de Consulta");
       
