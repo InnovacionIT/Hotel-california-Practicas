@@ -4,7 +4,7 @@ from .serializers import ReservaSerializer, FacturaSerializer, DetalleSerializer
 from GestionReservas.models import Reserva, Habitacion, Servicio, ServicioPorHabitacion
 from Facturacion.models import Factura, Detalle, DetallePago
 from rest_framework.views import APIView
-from emailHelper import enviar_correo
+import emailHelper
 
 #######################################################################################################
 # Métodos propios
@@ -206,7 +206,8 @@ class ConsultaView(APIView):
 
         # Enviamos el correo electrónico
         try:
-            enviar_correo(mensaje, nombre, email, "hcaliformia.info@gmail.com") 
+            emailHelper.enviar_correo_hotel(mensaje, nombre, email, "hcalifornia.info@gmail.com") 
+            emailHelper.enviar_correo_cliente(mensaje, nombre, email, "hcalifornia.info@gmail.com") 
             return Response({"mensaje": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
