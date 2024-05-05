@@ -6,8 +6,8 @@ import os
 
 def enviar_correo(mensaje, nombreRemitente, correoRemitente, correoDestinatario):
     em = EmailMessage()
-    em["from"] = "hcalifornia.info@gmail.com"  # Correo destinatario fijo
-    em["to"] = "hcalifornia.info@gmail.com"  # Correo destinatario fijo
+    em["from"] = correoDestinatario # Se envía correo a la misma empresa con la info de la consulta
+    em["to"] = correoDestinatario 
     em["subject"] = "Consulta de " + nombreRemitente
     
     # Formatear el cuerpo del correo con los datos proporcionados
@@ -21,5 +21,5 @@ def enviar_correo(mensaje, nombreRemitente, correoRemitente, correoDestinatario)
     load_dotenv()
     password = os.getenv("PASSWORD_EMAIL")
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context= context) as smpt:
-        smpt.login("hcalifornia.info@gmail.com", password)
-        smpt.sendmail("hcalifornia.info@gmail.com", "hcalifornia.info@gmail.com", em.as_string())
+        smpt.login(correoDestinatario, password)
+        smpt.sendmail(correoDestinatario, correoDestinatario, em.as_string())
