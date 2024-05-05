@@ -15,7 +15,7 @@ interface Consulta {
 })
 export class ConsultaService {
 
-  private apiConsultas: string = "http://localhost:8000/api/consulta";
+  private apiConsultas: string = "http://localhost:8000/api/consulta/";
 
   constructor(private http: HttpClient) { }
 
