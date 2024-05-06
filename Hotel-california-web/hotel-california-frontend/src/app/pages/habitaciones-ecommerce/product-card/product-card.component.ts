@@ -19,6 +19,7 @@ export class ProductCardComponent implements OnInit {
   userLoginOn:boolean=false;
   userData?:User;
   userId:number=0;
+  
 
   public misServiciosPorHabitacion:Array<ServicioInterface>=[];
   public misHabitaciones:Array<Habitacion>=[];
@@ -28,7 +29,9 @@ export class ProductCardComponent implements OnInit {
   public selectedLeaveDate: string;
   public usuarioId: number=1; // Reemplazar con el valor correspondiente, se inicializa en 1 para que no marque error
 
-  constructor(private router: Router, private loginService:LoginService, private reservacionService: ReservacionService) {
+  constructor(private router: Router, 
+    private loginService:LoginService, 
+    private reservacionService: ReservacionService) {
   /*   this.misHabitaciones =[
       new Habitacion (1, `Habitación Single o Doble`, `Equipados con microondas, pava eléctrica y heladera tipo frigobar, ideales para prepararse una merienda o un snack (no aptos para comidas más elaboradas). TV-LED. Caja de seguridad en las habitaciones. Conexión a Internet inalámbrica (Wi-Fi).`, [`Baño privado`, `Tv LED`, `Microondas`, `Pava eléctrica`, `frigobar`, `Caja de Seguridad`, `Wi-fi`], true, 3500),
       new Habitacion (2, `Habitación Triple`, `Equipados con cómodos Kitchenette de 2 x 1,8 m. aprox. con microondas, pava eléctrica y heladera tipo frigobar, ideales para prepararse una merienda o un snack (no aptos para comidas más elaboradas). TV-LED. Caja de seguridad en las habitaciones. Conexión a Internet inalámbrica (Wi-Fi). Sommiers de una plaza como camas adicionales.`, [`Baño privado`, `Tv LED`, `Microondas`, `Pava eléctrica`, `frigobar`, `Caja de Seguridad`, `Wi-fi`], true, 3200),
@@ -45,6 +48,18 @@ export class ProductCardComponent implements OnInit {
     this.selectedStartDate = this.startDate;
     this.selectedLeaveDate = this.leaveDate;
   }
+
+  public imagenesPorHabitacion: { [key: number]: string } = {
+    1: '../../../../assets/img/habitaciones/doble.jpg',
+    2: '../../../../assets/img/habitaciones/doble.jpg',
+    3: '../../../../assets/img/habitaciones/suiteDoble.jpg',
+    4: '../../../../assets/img/habitaciones/single.jpg',
+    5: '../../../../assets/img/habitaciones/suiteDoble.jpg',
+    6: '../../../../assets/img/habitaciones/single.jpg',
+    7: '../../../../assets/img/habitaciones/single.jpg',
+    8: '../../../../assets/img/habitaciones/suite.jpg'
+  };
+
 
   ngOnInit(): void {
     this.startDate = this.formatDate(new Date()); // Inicializar con la fecha actual
@@ -148,22 +163,18 @@ export class ProductCardComponent implements OnInit {
 
   redirectToLogin (userLoginOn:boolean) {
     if (!userLoginOn){
-      // Redireccionar al usuario a la ruta 'login'
-    this.router.navigate(['login']);
-    setTimeout(() => {
+    this.router.navigate(['login']);  // Redireccionar al usuario a la ruta 'login'
+   // setTimeout(() => {
       window.location.reload();
-    }, 0.001 );
+    //}, 0.001 );
     }
   }
 
 
   createReservation(reserva: any) {
-    // Lógica para crear la reserva
     console.log('Creando reserva:', reserva);
-      // Llamar a redirectPage() aquí
-      console.log(this.userLoginOn);
     this.redirectToLogin(this.userLoginOn);
-}
+  }
 
 
 }
