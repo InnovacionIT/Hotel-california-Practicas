@@ -24,8 +24,7 @@
       </div>
       <div class="modal-body row">
         <div class="col-8 col-sm-12" *ngIf="mostrarInfo">
-          <img src="../../../../assets/img/room01.jpg" class="modalImg" alt={{habitacion.tipoHabitacion}}>
-          <img src={{habitacion.imagenes}} class="modalImg" alt="room1">
+          
           <div class="roomServices">
             <ul class="serviceList">
               <li class="service" *ngFor="let servicio of habitacion.servicios">{{ servicio }}</li> <!-- Mapeo del array de servicios -->
