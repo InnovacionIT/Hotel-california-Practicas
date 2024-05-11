@@ -33,13 +33,12 @@ export class ReservacionService {
     return this.http.get<ServicioInterface[]>(url);
   }
 
-  getReservas(): Observable<ReservaInterface> {
-    const url = `${this.reservacionUrl}reserva`; // Reemplaza 'reservas' y '${reservaId}' con las URL correspondientes en tu backend
-    return this.http.get<ReservaInterface>(url);
+  getReservas(): Observable<ReservaInterface[]> {
+    return this.http.get<ReservaInterface[]>(this.reservacionUrl + "reserva/");
   }
 
   getReservaPorId(reservaId: number): Observable<ReservaInterface> {
-    const url = `${this.reservacionUrl}reserva/${reservaId}/`; // Reemplaza 'reservas' y '${reservaId}' con las URL correspondientes en tu backend
+    const url = `${this.reservacionUrl}reserva/${reservaId}/`;
     return this.http.get<ReservaInterface>(url);
   }
 

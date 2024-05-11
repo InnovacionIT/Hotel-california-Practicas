@@ -26,7 +26,7 @@ export class ProductCardComponent implements OnInit {
   public leaveDate: string;
   public selectedStartDate: string;
   public selectedLeaveDate: string;
-  public usuarioId: number=1; // Reemplazar con el valor correspondiente, se inicializa en 1 para que no marque error
+  public usuarioId: number=1; 
 
   constructor(private router: Router, private loginService:LoginService, private reservacionService: ReservacionService) {
   /*   this.misHabitaciones =[
