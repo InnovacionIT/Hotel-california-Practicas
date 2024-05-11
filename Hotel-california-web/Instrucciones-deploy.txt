@@ -110,9 +110,11 @@ Contraseña: telefono-usuario
 Si todos los datos ingresados son correctos, se mostrará el siguiente mensaje: 
 "Superuser created successfully."
 
-14) Una vez instaladas todas las dependencias necesarias y con el servidor apache de XAMPP levantado, el cual deja funcional y accesible nuestra base de datos, ejecutamos el comando en la terminal de nuestro editor de código, en la localización que nos quedamos en el PUNTO 10 (......\2023-Fullstack-Proyecto-Integrador\HotelCalifornia2023\BackendHotelCalifornia>): "python manage.py runserver"
+14) Teclea "pip install python-dotenv" (esto funciona, para generar una variable de entorno, dónde almacenaremos la contraseña del email que utilizará la web para hacer el envío de sus consultas)
 
-14. b) Puede que aparezca un mensaje que nos sugiera hacer una migración, al haber sido diferente la Base de Datos (sobre todo si es la primera vez que se ejecuta), para lo cual, previo al paso anterior hay que utilizar sl siguiente comando para realizar la migración: "python manage.py migrate", y luego sí el paso 14.
+15) Una vez instaladas todas las dependencias necesarias y con el servidor apache de XAMPP levantado, el cual deja funcional y accesible nuestra base de datos, ejecutamos el comando en la terminal de nuestro editor de código, en la localización que nos quedamos en el PUNTO 10 (......\2023-Fullstack-Proyecto-Integrador\HotelCalifornia2023\BackendHotelCalifornia>): "python manage.py runserver"
+
+15. b) Puede que aparezca un mensaje que nos sugiera hacer una migración, al haber sido diferente la Base de Datos (sobre todo si es la primera vez que se ejecuta), para lo cual, previo al paso anterior hay que utilizar sl siguiente comando para realizar la migración: "python manage.py migrate", y luego sí el paso 14.
 
 15) Debe aparecer un mensaje similar al siguiente:
 
