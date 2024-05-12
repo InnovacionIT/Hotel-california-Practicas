@@ -6,7 +6,7 @@ export interface Factura{
            
  } ;
  
- export interface detalle{
+ export interface Detalle{
     detalleId:Number,
     facturaId: Number,
     reservaId: Number,

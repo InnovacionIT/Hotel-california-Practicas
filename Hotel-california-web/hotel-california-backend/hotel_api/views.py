@@ -4,6 +4,8 @@ from .serializers import ReservaSerializer, FacturaSerializer, DetalleSerializer
 from GestionReservas.models import Reserva, Habitacion, Servicio, ServicioPorHabitacion
 from Facturacion.models import Factura, Detalle, DetallePago
 from rest_framework.views import APIView
+from django.db.models import Q
+import emailHelper
 
 #######################################################################################################
 # Métodos propios
@@ -21,6 +23,11 @@ def validarFecha(serializer):
 def tryGetById(clase, claseId):
     try:
         return clase.objects.get(pk=claseId)
+    except clase.DoesNotExist:
+        return None
+def tryGetByUserId(clase, userId):
+    try:
+        return clase.objects.filter(usuarioId_id=userId)
     except clase.DoesNotExist:
         return None
 
@@ -57,6 +64,17 @@ class HabitacionView(APIView):
             return Response({'error': 'No se encontraron habitaciones con el estado especificado'}, status=status.HTTP_404_NOT_FOUND)
         serializer = HabitacionSerializer(habitaciones, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    # def post(self, request):
+    #     # Verificar si ya hay 5 habitaciones creadas
+    #     if Habitacion.objects.count() >= 5:
+    #         return Response({'error': 'No se pueden crear más de 5 habitaciones'}, status=status.HTTP_400_BAD_REQUEST)
+        
+    #     serializer = HabitacionSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 ###############################################################################################################SERVICIOS
 #Servicios de Habitaciones
@@ -81,9 +99,11 @@ class ServicioPorHabitacionView(APIView):
 #Reservas
 
 class ReservaView(APIView):
-    def get(self, request, reservaId=None):
+    def get(self, request, reservaId=None, usuarioId=None):
         if reservaId is not None:  # Check if reservaId is provided
             return self.get_by_id(request, reservaId)
+        if usuarioId is not None:
+            return self.get_by_user_id(request, usuarioId)
         reservas = Reserva.objects.all()
         serializer = ReservaSerializer(reservas, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -94,11 +114,34 @@ class ReservaView(APIView):
             return Response({'error': 'Reserva not found'}, status=status.HTTP_404_NOT_FOUND)
         serializer = ReservaSerializer(reserva)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_by_user_id(self, request, userId):
+        print(userId)
+        reserva = tryGetByUserId(Reserva, userId)
+        if reserva is None:
+            return Response({'error': 'Reserva not found'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = ReservaSerializer(reserva, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request):
         serializer = ReservaSerializer(data=request.data)
         if serializer.is_valid():
-            validarFecha(serializer)
+            fecha_reserva = serializer.validated_data['fechaReserva']
+            fecha_ingreso = serializer.validated_data['fechaIngreso']
+            fecha_egreso = serializer.validated_data['fechaEgreso']
+            habitacion = serializer.validated_data['habitacionId']
+
+            # Verificar si hay reservas existentes para esta habitación y período de tiempo
+            reservas_existente = Reserva.objects.filter(
+                habitacionId=habitacion,
+                fechaIngreso__lte=fecha_egreso,
+                fechaEgreso__gte=fecha_ingreso
+            ).exclude(
+                Q(fechaIngreso__gte=fecha_egreso) | Q(fechaEgreso__lte=fecha_ingreso)
+            )
+
+            if reservas_existente.exists():
+                return Response({'error': 'Ya existe una reserva para esta habitación en este período de tiempo'}, status=status.HTTP_400_BAD_REQUEST)
+
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -193,3 +236,20 @@ class DetallePagoView(APIView):
     queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
     lookup_field = 'pk'
+
+#######################################################################################################
+# Consulta / Envío de mails
+class ConsultaView(APIView):
+    def post(self, request):
+        # Obtenemos los datos del formulario
+        nombre = request.data.get('nombre')
+        email = request.data.get('email')
+        mensaje = request.data.get('mensaje')
+
+        # Enviamos el correo electrónico
+        try:
+            emailHelper.enviar_correo_hotel(mensaje, nombre, email, "hcalifornia.info@gmail.com") 
+            emailHelper.enviar_correo_cliente(mensaje, nombre, email, "hcalifornia.info@gmail.com") 
+            return Response({"mensaje": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

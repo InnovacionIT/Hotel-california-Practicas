@@ -1,8 +1,8 @@
 <footer class="bg-dark text-white mt-4 py-4">
   <div class="container" id="contacto">
-    <nav class="row justify-content-between" >
-      <a (click)="scrollToTop()" class="col-3 text-reset text-uppercase d-flex align-items-center centrador">Ir arriba</a>
-      <ul class="col-4 list-unstyled centrador">
+    <nav class="row justify-content-between " >
+      <a (click)="scrollToTop()" class="col-1 text-reset text-uppercase d-flex align-items-center centrador ">Ir arriba</a>
+      <ul class="col-2 list-unstyled centrador">
         <li>
           <i class="fa fa-map-marked"></i>
           {{direccionHotel}}, C.P.: {{cpHotel}}, {{ciudadHotel}}, {{provinciaHotel}}, {{paisHotel}}
@@ -20,7 +20,7 @@
           </p>
         </li>
       </ul>
-      <ul class="col-3 list-unstyled centrador">
+      <ul class="col-2 list-unstyled centrador">
         <li class="font-weight-bold text-uppercase" style="text-align: center;">Redes Sociales</li>
         <li class="d-flex justify-content-around">
           <a href="{{instagramHotel}}"><i class="fa-brands fa-instagram"></i></a>
@@ -28,6 +28,10 @@
           <a href="{{twitterHotel}}"><i class="fa-brands fa-twitter"></i></a>
         </li>
       </ul>
+      <div class="col-3">
+        <app-button-appstore app="App Store" text="Descargá Hotel California en"></app-button-appstore>
+        <app-button-appstore app="Google Play" text="Descargá Hotel California en"></app-button-appstore>
+      </div>
       <ul class="col-2 list list-unstyled ">
         <li><a href="#" class="text-reset">Legales</a></li>
         <li><a href="#" class="text-reset">Publicidad</a></li>

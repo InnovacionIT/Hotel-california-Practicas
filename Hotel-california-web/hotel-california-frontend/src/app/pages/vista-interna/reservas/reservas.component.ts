@@ -1,166 +1,111 @@
-import { Component, OnInit, ViewChild,ViewContainerRef, } from '@angular/core';
-import { FacturaService } from 'src/app/services/factura.service';
-import { Factura, detalle, detallePago, tipoPago } from 'src/app/services/factura';
-import { ReservacionService } from '../../../services/reservacion.service';
-import { raceWith } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, forkJoin } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { ReservacionService } from '../../../services/reservacion.service';
+import { LoginService } from 'src/app/services/login.service';
+import { FacturaService } from 'src/app/services/factura.service';
+import { User } from 'src/app/services/user';
+import { ReservaInterface } from 'src/app/interface/reserva.interface';
+import { Habitacion } from 'src/app/models/habitacion';
+import { Detalle, Factura } from 'src/app/services/factura';
 
 @Component({
   selector: 'app-reservas',
   templateUrl: './reservas.component.html',
   styleUrls: ['./reservas.component.css']
 })
+
 export class ReservasComponent implements OnInit {
-  editarReserva : boolean = true;
-  mostrarReserva : boolean = true;
-  Editar : boolean = false;
-  editarDatos : boolean = true;
-  cambiosDatos : boolean = false;
-  monto = 19200;
+  editarDatos : boolean = false;
+  cambiosDatos : boolean = false; 
+  misReservas: Array<ReservaInterface>=[];
+  usuarioId: number = 0;
+  userData?:User;
+  habitaciones: Array<Habitacion> = [];
 
   constructor(
-    private facturaService: FacturaService,
     private reservacionService: ReservacionService, 
+    private facturaService: FacturaService,
+    private loginService: LoginService, 
     private router : Router,
     ) { }
-  factura: number = 100000037;
-  habitacionId: number = 1; // Valor de ejemplo para habitacionId
-  usuarioId: number = 1; // Valor de ejemplo para usuarioId
-  reservaId: number = 1; // Valor de ejemplo para reservaId
-  // lalalal comentario al cuete
 
    ngOnInit(): void {
-    //  this.getListadoHabitaciones();
-    //  this.getHabitacionPorId(this.habitacionId);
-    //  this.verificarDisponibilidad(this.habitacionId, new Date(), new Date());
-    //  this.createReservation({ usuarioId: this.usuarioId, habitacionId: this.habitacionId, fechaReserva: new Date() });
-    //  /* this.getReservaPorHabitacion(this.habitacionId); */
-    //  /* this.getReservaPorCliente(this.usuarioId); */
-    //  this.modificarReserva(this.reservaId, { usuarioId: this.usuarioId, habitacionId: this.habitacionId, fechaReserva: new Date() });
-    //  this.getReservaPorId(this.reservaId);
-    //  this.eliminarReserva(this.reservaId);
-    }
+    
+    // Traemos unfo del usuario logueado
+    this.loginService.currentUserData.subscribe({
+      next:(userData)=>{
+        this.userData = userData;
+        console.log("userData", userData);
+        this.usuarioId = userData.usuarioId
+        console.log("usuarioId", this.usuarioId);
+      }
+    })    
 
-
-    getFactura():void {
-      this.facturaService.Factura().subscribe(factura => {
-        console.log('datos de fatura', factura)
-      })
-    }
-    getDetalle():void {
-      this.facturaService.Factura().subscribe(factura => {
-        console.log('datos de fatura', factura)
-      })
-    }
-    getDetallePago():void {
-      this.facturaService.detalle().subscribe(detalle => {
-        console.log('detalle', detalle)
-      })
-    }
-    getTipoPago():void {
-      this.facturaService.tipoPago().subscribe(tipoPago => {
-        console.log('detalle',tipoPago )
-    })
+    // Obtenemos las reservas de este usuario
+    this.getReservasUsuarioLogueado();
   }
 
-  actualizarFactura(factura:Factura){
-    this.facturaService.addFactura(factura).subscribe(factura => {
-      console.log('actualizando factura',factura)
-  })
-  }
-
-  actualizarDetalle(detalle: detalle){
-    this.facturaService.addDetalle(detalle).subscribe(detalle => {
-      console.log('actualizando detalles',detalle)
-  })
-  }
-  actualizarDetallePago(detallePago: detallePago){
-    this.facturaService.addDetallePg(detallePago).subscribe(detallePago => {
-      console.log('actualizando detalles de pago',detallePago)
-  })
-  } actualizarTipoPago(tipoPago: tipoPago){
-    this.facturaService.addTipoPago(tipoPago).subscribe(tipoPago => {
-      console.log('actualizando detalles de pago',tipoPago)
-  })
-  }
-
-  crearFactura(factura : Factura):void{
-    this.facturaService.crearFactura(factura).subscribe(factura => {
-      console.log('factura creada', factura);
-    })
-}
-
-//habitaciones
-
-      getListadoHabitaciones(): void {
-       this.reservacionService.getListadoHabitaciones().subscribe(habitaciones => {
-         console.log('Listado de habitaciones:', habitaciones);
-       });
-     }
-
-     getHabitacionPorId(roomId: number): void {
-       this.reservacionService.getHabitacionPorId(roomId).subscribe(detalle => {
-         console.log('Detalle de habitación:', detalle);
-       });
-     }
-
-     getReservaPorId(reservationId: number): void {
-       this.reservacionService.getReservaPorId(reservationId).subscribe(reserva => {
-        console.log('Reserva por ID:', reserva);
-       });
-     }
-
-    /* getReservaPorHabitacion(roomId: number): void {
-      this.reservacionService.getReservasPorHabitacion(roomId).subscribe(reservas => {
-        console.log('Reservas por habitación:', reservas);
-      });
-    } */
-
-    /* getReservaPorCliente(clientId: number): void {
-      this.reservacionService.getReservaPorCliente(clientId).subscribe(reservas => {
-        console.log('Reservas por cliente:', reservas);
-      });
-    } */
-
-    modificarReserva(reservationId: number, updatedData: any): void {
-      this.reservacionService.modificarReserva(reservationId, updatedData).subscribe(reserva => {
-        console.log('Reserva modificada:', reserva);
-      });
+  getReservasUsuarioLogueado(): void {
+    this.reservacionService.getReservasUsuario(this.usuarioId).subscribe(
+      reservas => {
+        const habitacionesObservables = this.getHabitacionesReservadas(reservas);
+        forkJoin(habitacionesObservables).subscribe(
+          habitaciones => {
+            this.misReservas = reservas.map((reserva, index) => {
+              const habitacion = habitaciones[index];
+              if (habitacion) {
+                reserva.descripcion = habitacion.tipoHabitacion + " N° " + habitacion.numero;
+              }
+              return reserva;
+              });
+            }
+          );
+        }
+      );
     }
 
-    createReservation(reservationData: any): void {
-      this.reservacionService.createReservation(reservationData).subscribe(reserva => {
-        console.log('Reserva creada:', reserva);
-      });
+    getHabitacionesReservadas(reservas: ReservaInterface[]): Observable<Habitacion>[] {
+      const observables = [];
+      // Obtenemos todas las habitaciones del usuario
+      for (let reserva of reservas) {
+        observables.push(this.reservacionService.getHabitacionPorId(reserva.habitacionId));
+      }
+      return observables;
     }
 
-    eliminarReserva(reservationId: number): void {
-      this.reservacionService.eliminarReserva(reservationId).subscribe(() => {
-        console.log('Reserva eliminada');
-      });
+    reservaPagada(reserva: ReservaInterface): boolean {
+      return false;
     }
 
-    verificarDisponibilidad(roomId: number, checkInDate: Date, checkOutDate: Date): void {
-      this.reservacionService.verificarDisponibilidad(roomId, checkInDate, checkOutDate).subscribe(disponible => {
-        console.log('Habitación disponible:', disponible);
-      });
+    pagar(reserva: ReservaInterface): void {
+
+    }
+
+    cancelarReserva(reservaId: number) {
+      this.reservacionService.eliminarReserva(reservaId).subscribe({
+        next: (data) => {
+            console.log(data)
+            this.getReservasUsuarioLogueado();
+            this.router.navigateByUrl('/reservas') 
+          },
+          error: (error) => {
+            console.log(error)
+          }
+        });
     }
     
-    CancelarReserva(){
-      this.mostrarReserva = false;
-    }
     mostrarForm(){
-      this.Editar = true;
-      this.editarDatos = false
+      this.editarDatos = true;
     }
-   enviar(){
-    this.editarDatos = false;
-    this.Editar = false;
-    this.mostrarReserva = false;
-    this.cambiosDatos = true
-    setTimeout(() => {
-      this.router.navigate(['/nosotros'])}
-      ,6000);
-  }
+
+    enviar(){
+      this.editarDatos = false;
+      this.cambiosDatos = true
+      setTimeout(() => {
+        this.router.navigate(['/nosotros'])}
+        ,6000);
+    }  
 }
    

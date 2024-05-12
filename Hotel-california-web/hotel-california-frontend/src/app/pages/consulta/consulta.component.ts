@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ConsultaService } from 'src/app/services/consulta.service';
 
 
@@ -12,7 +12,7 @@ export class ConsultaComponent implements OnInit {
 
 nombreHotel = 'Hotel California';
 infoHotel = 'Descubre nuestro hotel con spa: relajación, tratamientos rejuvenecedores y una experiencia inolvidable. ¡Reserva ahora y déjate consentir! Comunícate con nosotros para más información.';
-direccionHotel = 'Calle Falsa 123';
+direccionHotel = 'Gdor Álvarez 600';
 cpHotel = '4250';
 ciudadHotel = 'Villa Carlos Paz';
 provinciaHotel = 'Córdoba';
@@ -29,19 +29,27 @@ consultaEnviada: boolean = false;
   constructor(private fb: FormBuilder, private consultaService: ConsultaService) {
     this.consultaForm = this.fb.group({
       nombre: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, this.comValidator]],
       mensaje: ['',Validators.required]
     });
+    }
+
+    comValidator(control: FormControl) {
+      const email = control.value;
+      if (email && !email.endsWith('.com')) {
+        return { 'invalidEmail': true };
+      }
+      return null;
     }
 
   ngOnInit(): void {
   }
 
   onConsulta(event: Event): void {
-    event.preventDefault;
+    event.preventDefault();
     if (this.consultaForm.valid){
       console.log("Llamar al servicio de Consulta");
-      
+
       const nombre = this.consultaForm.get('nombre')!.value;
       const email = this.consultaForm.get('email')!.value;
       const mensaje = this.consultaForm.get('mensaje')!.value;
@@ -63,7 +71,7 @@ consultaEnviada: boolean = false;
   }
 
 
-    
+
 
 }
 

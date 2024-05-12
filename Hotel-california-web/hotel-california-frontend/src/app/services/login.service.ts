@@ -16,6 +16,8 @@ export class LoginService {
   login(_credentials: LoginRequest): Observable<User> {
     return this.http.post<User>('http://localhost:8000/api/auth/login/', _credentials).pipe(
       tap(userData => {
+        localStorage.setItem('userData', JSON.stringify(userData));
+        localStorage.setItem('userLoginOn', JSON.stringify(true));
         this.currentUserData.next(userData);
         console.log("userDataLserv", userData);
         this.currentUserLoginOn.next(true);

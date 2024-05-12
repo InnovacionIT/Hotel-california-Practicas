@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaderResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {  map } from 'rxjs/operators';
-import { Factura, detalle, detallePago, tipoPago } from './factura';
+import { Factura, Detalle, detallePago, tipoPago } from './factura';
 
 
 @Injectable({
@@ -14,13 +14,18 @@ export class FacturaService {
   baseUrl= 'http://localhost:8000/api/';
  
  //get 
- Factura(): Observable<Factura[]>{
-  const url = `${this.baseUrl}/factura`;
+ getTodasFacturas(): Observable<Factura[]>{
+  const url = `${this.baseUrl}factura/`;
   return this.http.get<Factura[]>(url);
  }
- detalle() {
-  const url = `${this.baseUrl}/detalle`;
-  return this.http.get<detalle[]>(url);
+
+ getFactura(id: Number): Observable<Factura> {
+  return this.http.get<Factura>(this.baseUrl + "factura/" + id + "/");
+ }
+
+ getDetallesFacturas() {
+  const url = `${this.baseUrl}detalle/`;
+  return this.http.get<Detalle[]>(url);
   }
   detallePago(): Observable <detallePago[]>{
     const url = `${this.baseUrl}/detallePago`;
@@ -39,9 +44,9 @@ export class FacturaService {
     const url = `${this.baseUrl}/factura`;
     return this.http.post<any>(url, factura);
   }    
-  addDetalle(detalle: detalle): Observable<detalle[]>{
+  addDetalle(detalle: Detalle): Observable<Detalle[]>{
     const url = `${this.baseUrl}/detalle`;
-    return this.http.post<detalle[]>(url,detalle);
+    return this.http.post<Detalle[]>(url,detalle);
   }
   addDetallePg(detallePago: detallePago){
     const url = `${this.baseUrl}/detallePago`;

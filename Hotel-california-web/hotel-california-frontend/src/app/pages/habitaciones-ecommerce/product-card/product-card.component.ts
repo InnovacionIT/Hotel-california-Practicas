@@ -19,7 +19,7 @@ export class ProductCardComponent implements OnInit {
   userLoginOn:boolean=false;
   userData?:User;
   userId:number=0;
-
+  selectedRoom!:Habitacion;
   public misServiciosPorHabitacion:Array<ServicioInterface>=[];
   public misHabitaciones:Array<Habitacion>=[];
   public startDate: string;
@@ -27,82 +27,58 @@ export class ProductCardComponent implements OnInit {
   public selectedStartDate: string;
   public selectedLeaveDate: string;
   public usuarioId: number=1; // Reemplazar con el valor correspondiente, se inicializa en 1 para que no marque error
-
+  user!:User;
   constructor(private router: Router, private loginService:LoginService, private reservacionService: ReservacionService) {
-  /*   this.misHabitaciones =[
-      new Habitacion (1, `Habitación Single o Doble`, `Equipados con microondas, pava eléctrica y heladera tipo frigobar, ideales para prepararse una merienda o un snack (no aptos para comidas más elaboradas). TV-LED. Caja de seguridad en las habitaciones. Conexión a Internet inalámbrica (Wi-Fi).`, [`Baño privado`, `Tv LED`, `Microondas`, `Pava eléctrica`, `frigobar`, `Caja de Seguridad`, `Wi-fi`], true, 3500),
-      new Habitacion (2, `Habitación Triple`, `Equipados con cómodos Kitchenette de 2 x 1,8 m. aprox. con microondas, pava eléctrica y heladera tipo frigobar, ideales para prepararse una merienda o un snack (no aptos para comidas más elaboradas). TV-LED. Caja de seguridad en las habitaciones. Conexión a Internet inalámbrica (Wi-Fi). Sommiers de una plaza como camas adicionales.`, [`Baño privado`, `Tv LED`, `Microondas`, `Pava eléctrica`, `frigobar`, `Caja de Seguridad`, `Wi-fi`], true, 3200),
-      new Habitacion (3, `Habitación Cuádruple`, `Habitaciones familiares con 2 ambientes, dos camas doble plaza y 1 baño. Algunas con vistas al lago, TV 42 pulgadas con canales internacionales, minibar, etc.`, [`Baño privado`, `Tv LED`, `Microondas`, `Pava eléctrica`, `frigobar`, `Caja de Seguridad`, `Wi-fi`], true, 3000),
-      new Habitacion (4, `Suite Exclusiva`, `Amplia y elegante habitación equipada con una cama King, muebles de madera oscura, obras de arte en las paredes, baño privado con artículos de aseo gratuitos, escritorio, frigobar, cafetera,   caja fuerte,  sofá cama y sillón de descanso. Esta habitación cuenta con un balcón privado con sillones y  un gran  jacuzzi   que le garantizan un ambiente ideal para un placentero descanso disfrutando la naturaleza circundante`, [`Baño privado`, `Tv LED`, `Microondas`, `Pava eléctrica`, `frigobar`, `Caja de Seguridad`, `Wi-fi`], true, 5500),
-      new Habitacion (5, `Suite Junior Doble`, `Amplia habitación  equipada con dos camas queen. Disponen de muebles de madera oscura, obras de arte en las paredes, baño privado con artículos de aseo gratuitos, escritorio, frigobar,  caja fuerte, cafetera  terraza con sillones para disfrutar de la naturaleza con vista al jardín.`, [`Baño privado`, `Tv LED`, `Microondas`, `Pava eléctrica`, `frigobar`, `Caja de Seguridad`, `Wi-fi`], true, 5000)
-    ]; */
-
     const today = new Date(); // Obtener fecha actual
     const sevenDaysLater = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000); // Sumar 7 días a la fecha actual
-
     this.startDate = today.toISOString().split('T')[0]; // Convertir fecha a formato YYYY-MM-DD
     this.leaveDate = sevenDaysLater.toISOString().split('T')[0]; // Convertir fecha a formato YYYY-MM-DD
     this.selectedStartDate = this.startDate;
     this.selectedLeaveDate = this.leaveDate;
   }
+  servicios!: any[]
+
+  public imagenesPorHabitacion: { [key: number]: string } = {
+    1: '../../../../assets/img/habitaciones/doble.jpg',
+    2: '../../../../assets/img/habitaciones/doble.jpg',
+    3: '../../../../assets/img/habitaciones/suiteDoble.jpg',
+    4: '../../../../assets/img/habitaciones/single.jpg',
+    5: '../../../../assets/img/habitaciones/suiteDoble.jpg',
+    6: '../../../../assets/img/habitaciones/single.jpg',
+    7: '../../../../assets/img/habitaciones/single.jpg',
+    8: '../../../../assets/img/habitaciones/suite.jpg'
+  };
+
 
   ngOnInit(): void {
+    this.loginService.userData.subscribe({
+      next: (user) => {
+        this.user = user;
+      }
+    });
+    this.loginService.userLoginOn.subscribe({
+      next: (userLogged) => {
+        this.userLoginOn = userLogged;
+      }
+    })
     this.startDate = this.formatDate(new Date()); // Inicializar con la fecha actual
     this.leaveDate = this.formatDate(this.calculateLeaveDate()); // Inicializar con la fecha de salida
 
-    // Reemplaza con el valor correcto para usuarioId
-    this.loginService.currentUserLoginOn.subscribe({
-      next:(userLoginOn)=> {
-        this.userLoginOn=userLoginOn;
-      }
-    });
-
-    this.loginService.currentUserData.subscribe({
-      next:(userData)=>{
-      this.userData=userData;
-      console.log("userData", userData);
-      //this.userEmail = userData.usuario;
-      this.userId=userData.usuarioId
-      //this.userName = userData ? userData.nombre || '' : '';
-      console.log("userId", this.userId);
-      }
-    })
-    this.usuarioId = 1;
-    this.reservacionService.getListadoHabitaciones().subscribe(
-      habitaciones => {
+    this.reservacionService.getListadoHabitaciones().subscribe({
+      next: (habitaciones:Habitacion[]) => {
         this.misHabitaciones = habitaciones;
+        this.misHabitaciones.forEach(hab => {
+          this.obtenerServicios(hab);
+        })
         console.log("misHabitaciones", this.misHabitaciones);
-        //new Habitacion (1, `Habitación Single o Doble`, `Equipados con microondas, pava eléctrica y heladera tipo frigobar, ideales para prepararse una merienda o un snack (no aptos para comidas más elaboradas). TV-LED. Caja de seguridad en las habitaciones. Conexión a Internet inalámbrica (Wi-Fi).`, [`Baño privado`, `Tv LED`, `Microondas`, `Pava eléctrica`, `frigobar`, `Caja de Seguridad`, `Wi-fi`], true, 3500),
-
       },
-      error => {
+      error: (error) => {
         console.error('Error al obtener las habitaciones:', error);
       }
-    );
+    }
+  );
 
-   /*  this.reservacionService.getServiciosPorHabitacionId(habitacion.habitacionId).subscribe(
-      servicios => {
-        habitacion.servicios = servicios;
-      },
-      error => {
-        console.error('Error al obtener los servicios:', error);
-      }
-    ); */
-
-
-  }
-
-  obtenerServicios(habitacion: Habitacion) {
-    this.reservacionService.getServiciosPorHabitacionId(habitacion.habitacionId).subscribe(
-      servicios => {
-        habitacion.servicios = servicios;
-      },
-      error => {
-        console.error('Error al obtener los servicios:', error);
-      }
-    );
-  }
-
+}
 
   calculateLeaveDate(): Date {
     const startDate = new Date(this.startDate);
@@ -126,43 +102,60 @@ export class ProductCardComponent implements OnInit {
     return diffDays;
   }
 
+  obtenerServicios(habitacion: Habitacion) {
+    this.reservacionService.getServiciosPorHabitacionId(habitacion.habitacionId).subscribe(
+      servicios => {
+        habitacion.servicios = servicios;
+        console.log(servicios);
+      },
+      error => {
+        console.error('Error al obtener los servicios:', error);
+      }
+    );
+  }
+
+
   confirmReservation(habitacionId: number) {
-    const usuarioId = this.usuarioId;
+    if(!this.user || !this.userLoginOn){
+      this.redirectToLogin();
+      return;
+    }
+    const usuarioId = this.user.usuarioId;
     const habitacion = this.misHabitaciones.find(h => h.habitacionId === habitacionId);
-    const fechaReserva = new Date();
+    const fechaReserva = new Date().toISOString().split('T')[0];
 
     const reserva = {
       usuarioId: usuarioId,
       habitacionId: habitacionId,
-      fechaReserva: fechaReserva
+      fechaReserva: fechaReserva,
+      fechaIngreso: this.selectedStartDate,
+      fechaEgreso: this.selectedLeaveDate
 
 
     };
 
     this.createReservation(reserva);
-    console.log('Reserva enviada:', reserva);
-
+    
     this.mostrarInfo = false;//solo para simular
-    this.mostrarBanner = true;
   }
 
-  redirectToLogin (userLoginOn:boolean) {
-    if (!userLoginOn){
-      // Redireccionar al usuario a la ruta 'login'
-    this.router.navigate(['login']);
-    setTimeout(() => {
-      window.location.reload();
-    }, 0.001 );
-    }
+  redirectToLogin () {
+    this.router.navigateByUrl('/login');
   }
 
 
-  createReservation(reserva: any) {
-    // Lógica para crear la reserva
+createReservation(reserva: any) {
     console.log('Creando reserva:', reserva);
-      // Llamar a redirectPage() aquí
-      console.log(this.userLoginOn);
-    this.redirectToLogin(this.userLoginOn);
+    this.reservacionService.createReservation(reserva).subscribe({
+      next: (data) => {
+        console.log(data)
+        console.log('Reserva enviada:', reserva);
+        this.router.navigateByUrl('/reservas') 
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    });
 }
 
 

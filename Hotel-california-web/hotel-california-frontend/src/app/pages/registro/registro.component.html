@@ -15,7 +15,7 @@
                         <div class="col-md  order-first">
                             <div class="mb-3 text-start">
                                 <input type="text" class="form-control" name="nombre" id="nombre"
-                                    onblur="" onfocus="" [(ngModel)]="cliente.nombre"
+                                    [(ngModel)]="cliente.nombre"
                                     formControlName="nombre"
                                     placeholder="Nombre" required minlength="3" maxlength="20">
                                 <label for="nombre" class="form-label text-start">Nombre </label>
@@ -26,7 +26,7 @@
                         <div class="col-md order-last">
                             <div class="mb-3 text-start">
                                 <input type="text" class="form-control" name="apellido" id="apellido"
-                                    onblur="" onfocus="" [(ngModel)]="cliente.apellido"
+                                    [(ngModel)]="cliente.apellido"
                                     formControlName="apellido"
                                     placeholder="Apellido" required minlength="4" maxlength="15">
                                 <label for="apellido" class="form-label text-start">Apellido </label>
@@ -48,7 +48,7 @@
                         <div class="col-md  order-first">
                             <div class="mb-3 text-start">
                                 <input type="number" class="form-control" name="telefono" id="telefono"
-                                    onblur="" onfocus=""
+                                    
                                     placeholder="Teléfono" [(ngModel)]="cliente.telefono" 
                                     formControlName="telefono" required>
                                 <label for="telefono" class="form-label text-start">Teléfono </label>
@@ -59,7 +59,7 @@
                         <div class="col-md order-last">
                             <div class="mb-3 text-start">
                                 <input type="text" class="form-control" name="ciudad" id="ciudad"
-                                    onblur="" onfocus=""
+                                    
                                     placeholder="Ciudad" [(ngModel)]="cliente.ciudad"
                                     formControlName="ciudad" required>
                                 <label for="ciudad" class="form-label text-start">Ciudad</label>
@@ -92,7 +92,7 @@
                         <div class="col-md order-last">
                             <div class="mb-3 text-start">
                                 <input type="date" class="form-control" name="fecha-nacimiento" id="fecha-nacimiento"
-                                    value="1999-01-01" min="1922-01-01" max="2022-10-20"
+                                    min="1922-01-01" max="2022-10-20"
                                     placeholder="Fecha de Nacimiento" [(ngModel)]="cliente.fechaDeNacimiento"
                                     formControlName="fechaDeNacimiento" required>
                                 <label for="fecha-nacimiento" class="form-label text-start">Fecha de Nacimiento
@@ -107,8 +107,8 @@
                         <div class="col-md  order-first">
                             <div class="mb-3 text-start">
                                 <input type="email" class="form-control" name="email" id="email"
-                                    onblur="" onfocus=""
-                                    onfocus="" placeholder="nombre@email.com" [(ngModel)]="cliente.usuario"
+                                    
+                                    placeholder="nombre@email.com" [(ngModel)]="cliente.usuario"
                                     formControlName="usuario"  required>
                                 <label for="email" class="form-label text-start">Email</label>
                                 <span id="email-incorrecto" class="errorDato"> Debe ingresar un email </span>
@@ -118,7 +118,7 @@
                         <div class="col-md order-last">
                             <div class="mb-3 text-start">
                                 <input type="email" class="form-control" name="repetir-email" id="repetir-email"
-                                    onblur="" onfocus=""
+                                    
                                     placeholder="nombre@email.com" required>
                                 <label for="repetir-email" class="form-label text-start"> Repetir email</label>
                                 <span id="repetir-email-incorrecto" class="errorDato"> El email ingresado no
@@ -132,7 +132,7 @@
                         <div class="col-md  order-first">
                             <div class="mb-3 text-start">
                                 <input type="password" class="form-control" name="password" id="password"
-                                    onblur="" onfocus=""
+                                    
                                     placeholder="Elige una contraseña" [(ngModel)]="cliente.password"
                                     formControlName="password" required>
                                 <label for="password" class="form-label text-start">Contraseña</label>
@@ -143,8 +143,8 @@
                         <div class="col-md order-last">
                             <div class="mb-3 text-start">
                                 <input type="password" class="form-control" name="repetirPassword" id="repetir-password"
-                                    onblur=""
-                                    onfocus="" placeholder="Repite tu contraseña"
+                                    
+                                    placeholder="Repite tu contraseña"
                                     required>
                                 <label for="repetir-password" class="form-label text-start">Repetir
                                     contraseña</label>

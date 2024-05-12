@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
     usuario:['', [Validators.required, Validators.email]],
     password:['' ,Validators.required]
   })
+  errorMessage: string | undefined;
 
 
 constructor(private formBuilder:FormBuilder, private router:Router, private loginService:LoginService) { }
@@ -43,6 +44,14 @@ constructor(private formBuilder:FormBuilder, private router:Router, private logi
 
         error:(errorData) => {
           console.error(errorData);
+
+          if (errorData.status === 400 ) {
+
+            this.errorMessage = 'Credenciales o usuario inválido.';
+          } else {
+            console.log(errorData, this.errorMessage)
+            this.errorMessage = 'No se ha podido iniciar sesión. ';
+          }
 
         },
         complete: () => {
