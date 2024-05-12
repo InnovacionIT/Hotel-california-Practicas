@@ -1,61 +1,36 @@
 <br>           
-<div class="table-responsive-lg"  *ngIf="editarDatos">
+<div class="table-responsive-lg"  *ngIf="misReservas.length> 0">
     <table class="table">
         <thead class="thead-dark">
             <tr>
-              <th scope="col">Nro Reserva</th>
               <th scope="col">Habitación</th>
               <th scope="col">Fecha Ingreso</th>
               <th scope="col">Fecha Egreso</th>
-              <th scope="col">Nro Factura</th>
-              <th scope="col">Forma Pago</th>
-              <th scope="col">Pago total</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody >
-            <tr *ngIf="mostrarReserva">
-              <td>2589</td>
-              <td>Habitación Triple</td>
-              <td> 19/6/2023</td>
-              <td>26/6/2023</td>
-              <td>{{factura}}</td>
-              <td>Tarjeta de crédito</td>
-              <td>19200</td>
+            <tr *ngFor="let reserva of misReservas">
+              <td>{{ reserva.descripcion }}</td>
+              <td>{{ reserva.fechaIngreso }}</td>
+              <td>{{ reserva.fechaEgreso }}</td>
+              <td><button type="button" class="btn"
+                [class.btn-secondary]="reservaPagada(reserva)"
+                [class.btn-success]="!reservaPagada(reserva)"
+                [class.text-white]="!reservaPagada(reserva)"
+                [disabled]="reservaPagada(reserva)"
+                (click)="reservaPagada(reserva) ? null : pagar(reserva)">
+                {{ reservaPagada(reserva) ? 'Pagada' : 'Pagar' }}
+              </button></td>
+              <td><button type="button" class="btn btn-primary" (click)="mostrarForm()">Editar</button></td>
+              <td><button type="button" class="btn btn-danger" (click)="cancelarReserva(reserva.reservaId)">Cancelar Reserva</button></td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
+          </tbody>
     </table>
   </div>
- <div class="btn" *ngIf="editarDatos">
-  <button type="button" class="btn btn-danger" (click)="CancelarReserva()">Cancelar Reserva</button>
-  <button type="button" class="btn btn-primary" (click)="mostrarForm()">Editar</button>
-</div>
-<div class="form" *ngIf="Editar">
+<div class="form" *ngIf="editarDatos">
 <form  >
   <div class="form-group">
     <form>
@@ -101,5 +76,5 @@
   <h3>Su reserva se ha modificado con éxito</h3>
   <br>
   <p>En caso de presentar de error en la modificación, por favor comuniquese con nuestro equipo de atención al cliente o de soporte.</p>
-  <p>Correo electrónico: innovacion.it.ispc@gmail.com</p>
+  <p>Correo electrónico: innovacion.it.ispc&#64;gmail.com</p>
 </div></div>

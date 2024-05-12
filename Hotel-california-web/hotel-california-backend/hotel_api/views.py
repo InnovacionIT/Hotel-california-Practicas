@@ -4,6 +4,7 @@ from .serializers import ReservaSerializer, FacturaSerializer, DetalleSerializer
 from GestionReservas.models import Reserva, Habitacion, Servicio, ServicioPorHabitacion
 from Facturacion.models import Factura, Detalle, DetallePago
 from rest_framework.views import APIView
+from django.db.models import Q
 import emailHelper
 
 #######################################################################################################
@@ -63,6 +64,17 @@ class HabitacionView(APIView):
             return Response({'error': 'No se encontraron habitaciones con el estado especificado'}, status=status.HTTP_404_NOT_FOUND)
         serializer = HabitacionSerializer(habitaciones, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    # def post(self, request):
+    #     # Verificar si ya hay 5 habitaciones creadas
+    #     if Habitacion.objects.count() >= 5:
+    #         return Response({'error': 'No se pueden crear más de 5 habitaciones'}, status=status.HTTP_400_BAD_REQUEST)
+        
+    #     serializer = HabitacionSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 ###############################################################################################################SERVICIOS
 #Servicios de Habitaciones
@@ -113,7 +125,23 @@ class ReservaView(APIView):
     def post(self, request):
         serializer = ReservaSerializer(data=request.data)
         if serializer.is_valid():
-            validarFecha(serializer)
+            fecha_reserva = serializer.validated_data['fechaReserva']
+            fecha_ingreso = serializer.validated_data['fechaIngreso']
+            fecha_egreso = serializer.validated_data['fechaEgreso']
+            habitacion = serializer.validated_data['habitacionId']
+
+            # Verificar si hay reservas existentes para esta habitación y período de tiempo
+            reservas_existente = Reserva.objects.filter(
+                habitacionId=habitacion,
+                fechaIngreso__lte=fecha_egreso,
+                fechaEgreso__gte=fecha_ingreso
+            ).exclude(
+                Q(fechaIngreso__gte=fecha_egreso) | Q(fechaEgreso__lte=fecha_ingreso)
+            )
+
+            if reservas_existente.exists():
+                return Response({'error': 'Ya existe una reserva para esta habitación en este período de tiempo'}, status=status.HTTP_400_BAD_REQUEST)
+
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
