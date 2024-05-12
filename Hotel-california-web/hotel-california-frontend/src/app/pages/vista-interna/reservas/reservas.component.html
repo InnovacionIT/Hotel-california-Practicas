@@ -6,22 +6,24 @@
               <th scope="col">Habitación</th>
               <th scope="col">Fecha Ingreso</th>
               <th scope="col">Fecha Egreso</th>
-              <th scope="col" *ngIf="editarDatos"></th>
-              <th scope="col" *ngIf="editarDatos"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody >
             <tr *ngFor="let reserva of misReservas">
-              <td>{{ reserva.habitacionId }}</td>
+              <td>{{reserva.descripcion}}</td>
               <td>{{ reserva.fechaIngreso }}</td>
               <td>{{ reserva.fechaEgreso }}</td>
-              <td><button type="button" class="btn btn-danger" (click)="CancelarReserva()">Cancelar Reserva</button></td>
+              <td>Pagada/Pagar</td>
               <td><button type="button" class="btn btn-primary" (click)="mostrarForm()">Editar</button></td>
+              <td><button type="button" class="btn btn-danger" (click)="cancelarReserva()">Cancelar Reserva</button></td>
             </tr>
           </tbody>
     </table>
   </div>
-<div class="form" *ngIf="Editar">
+<div class="form" *ngIf="editarDatos">
 <form  >
   <div class="form-group">
     <form>
@@ -67,5 +69,5 @@
   <h3>Su reserva se ha modificado con éxito</h3>
   <br>
   <p>En caso de presentar de error en la modificación, por favor comuniquese con nuestro equipo de atención al cliente o de soporte.</p>
-  <p>Correo electrónico: innovacion.it.ispc"&#64;"gmail.com</p>
+  <p>Correo electrónico: innovacion.it.ispc&#64;gmail.com</p>
 </div></div>

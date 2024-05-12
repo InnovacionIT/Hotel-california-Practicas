@@ -26,7 +26,8 @@ export interface HabitacionInterface {
 }
 export interface ReservaInterface {
   reservaId: number;
-  habitacionId:number;
+  habitacionId: number;
+  descripcion: string;
   fechaIngreso: Date;
   fechaEgreso: Date;
   usuarioId: number;

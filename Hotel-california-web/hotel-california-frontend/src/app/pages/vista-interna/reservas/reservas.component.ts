@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FacturaService } from 'src/app/services/factura.service';
-import { Factura, detalle, detallePago, tipoPago } from 'src/app/services/factura';
 import { ReservacionService } from '../../../services/reservacion.service';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/services/user';
 import { ReservaInterface } from 'src/app/interface/reserva.interface';
+import { Habitacion } from 'src/app/models/habitacion';
+import { Observable, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-reservas',
@@ -14,32 +14,22 @@ import { ReservaInterface } from 'src/app/interface/reserva.interface';
 })
 
 export class ReservasComponent implements OnInit {
-  // editarReserva : boolean = true;
-  mostrarReserva : boolean = true;
-  Editar : boolean = false;
-  editarDatos : boolean = true;
+  editarDatos : boolean = false;
   cambiosDatos : boolean = false; 
-  // monto = 19200;
-  // factura: number = 100000037;
-  // habitacionId: number = 1; // Valor de ejemplo para habitacionId
-  // reservaId: number = 1; // Valor de ejemplo para reservaId
   misReservas: Array<ReservaInterface>=[];
-  usuarioId: number = 0; // Valor de ejemplo para usuarioId
+  usuarioId: number = 0;
   userData?:User;
+  habitaciones: Array<Habitacion> = [];
 
   constructor(
-    private facturaService: FacturaService,
     private reservacionService: ReservacionService, 
     private loginService: LoginService, 
     private router : Router,
     ) { }
-  factura!: number;
-  habitacion!: number ; // Valor de ejemplo para habitacionId
-  user!: number; // Valor de ejemplo para usuarioId
-  reservation!: number ; // Valor de ejemplo para reservaId
 
    ngOnInit(): void {
     
+    // Traemos unfo del usuario logueado
     this.loginService.currentUserData.subscribe({
       next:(userData)=>{
         this.userData = userData;
@@ -47,21 +37,53 @@ export class ReservasComponent implements OnInit {
         this.usuarioId = userData.usuarioId
         console.log("usuarioId", this.usuarioId);
       }
-    })
+    })    
 
+    // Obtenemos las reservas de este usuario
     this.getReservasUsuarioLogueado();
+  }
 
-    };
-    
-    getReservasUsuarioLogueado():void {
-      this.reservacionService.getReservasUsuario(this.usuarioId).subscribe(
-        reservas => {
-          // Filtra las reservas que sean de este usuarion logueado.
-          // this.misReservas = reservas.filter(r=> r.usuarioId == this.usuarioId);
-          this.misReservas = reservas;
-          console.log("misReservas", this.misReservas);
-        });
+  getReservasUsuarioLogueado(): void {
+    this.reservacionService.getReservasUsuario(this.usuarioId).subscribe(
+      reservas => {
+        const habitacionesObservables = this.getHabitacionesReservadas(reservas);
+        forkJoin(habitacionesObservables).subscribe(
+          habitaciones => {
+            this.misReservas = reservas.map((reserva, index) => {
+              const habitacion = habitaciones[index];
+              if (habitacion) {
+                reserva.descripcion = habitacion.tipoHabitacion + " N° " + habitacion.numero;
+              }
+              return reserva;
+              });
+            }
+          );
+        }
+      );
     }
+
+    getHabitacionesReservadas(reservas: ReservaInterface[]): Observable<Habitacion>[] {
+      const observables = [];
+      // Obtenemos todas las habitaciones del usuario
+      for (let reserva of reservas) {
+        observables.push(this.reservacionService.getHabitacionPorId(reserva.habitacionId));
+      }
+      return observables;
+    }
+
+
+    cancelarReserva(){
+      // TODO
+    }
+    mostrarForm(){
+      this.editarDatos = true;
+    }
+   enviar(){
+    this.editarDatos = false;
+    this.cambiosDatos = true
+    setTimeout(() => {
+      this.router.navigate(['/nosotros'])}
+      ,6000);}
   
 //     getFactura():void {
 //       this.facturaService.Factura().subscribe(factura => {
@@ -154,22 +176,5 @@ export class ReservasComponent implements OnInit {
 //         console.log('Habitación disponible:', disponible);
 //       });
 //     }
-    
-    CancelarReserva(){
-      this.mostrarReserva = false;
-    }
-    mostrarForm(){
-      this.Editar = true;
-      this.editarDatos = false
-    }
-   enviar(){
-    this.editarDatos = false;
-    this.Editar = false;
-    this.mostrarReserva = false;
-    this.cambiosDatos = true
-    setTimeout(() => {
-      this.router.navigate(['/nosotros'])}
-      ,6000);
-  }
 }
    

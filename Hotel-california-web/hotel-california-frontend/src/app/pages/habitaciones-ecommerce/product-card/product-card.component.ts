@@ -78,10 +78,7 @@ export class ProductCardComponent implements OnInit {
     }
   );
 
-  
-  
 }
-
 
   calculateLeaveDate(): Date {
     const startDate = new Date(this.startDate);
