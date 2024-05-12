@@ -21,6 +21,9 @@
                         El email debe tener un formato válido.
                         </div>
                         </div>
+                        <div *ngIf="errorMessage" class="error-message text-danger">
+                          {{ errorMessage }}
+                        </div>
                     <!-- <label for="nombreUsuario" class="form-label text-start">Nombre de Usuario</label>
                     <span id="usuario-incorrecto" class="errorDato"> El nombre de usuario no esta registrado </span>
                     <span id="usuario-sin-ingresar" class="errorDato"> Ingrese un usuario </span> -->
@@ -45,7 +48,7 @@
                     </label>
                 </div>
                 <button type="submit" (click)="login()" class="w-100 btn btn-lg btn-complementario" id="botonLogin">
-                    <a class="nav-link" >Iniciar Sesión</a> 
+                    <a class="nav-link" >Iniciar Sesión</a>
                 </button>
                 <!-- <button class="w-100 btn btn-lg btn-complementario" type="submit" id="botonLogin">Ingresar</button> -->
                 <p class="mt-5 mb-3">Todavía no tenés cuenta?<a [routerLink]="['/registro']" class="registrate">
