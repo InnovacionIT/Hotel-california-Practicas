@@ -28,9 +28,9 @@ export class ReservacionService {
     return this.http.get<HabitacionInterface[]>(url);
   }
 
-  getServiciosPorHabitacionId(roomId: number): Observable<ServicioInterface[]> { // ver la interface de servicios
+  getServiciosPorHabitacionId(roomId: number): Observable<string[]> { // ver la interface de servicios
     const url = `${this.reservacionUrl}servicio/${roomId}`;
-    return this.http.get<ServicioInterface[]>(url);
+    return this.http.get<string[]>(url);
   }
 
   getReservas(): Observable<ReservaInterface[]> {
@@ -60,7 +60,7 @@ export class ReservacionService {
   }
   //POST
   createReservation(reservationData: Reservation): Observable<any> {
-    const url = `${this.reservacionUrl}reserva`;
+    const url = `${this.reservacionUrl}reserva/`;
     return this.http.post<any>(url, reservationData);
   }
 

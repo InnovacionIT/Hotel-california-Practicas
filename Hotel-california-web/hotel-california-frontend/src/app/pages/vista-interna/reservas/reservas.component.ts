@@ -33,6 +33,10 @@ export class ReservasComponent implements OnInit {
     private loginService: LoginService, 
     private router : Router,
     ) { }
+  factura!: number;
+  habitacion!: number ; // Valor de ejemplo para habitacionId
+  user!: number; // Valor de ejemplo para usuarioId
+  reservation!: number ; // Valor de ejemplo para reservaId
 
    ngOnInit(): void {
     

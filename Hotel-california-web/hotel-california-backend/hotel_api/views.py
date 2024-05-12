@@ -5,6 +5,7 @@ from GestionReservas.models import Reserva, Habitacion, Servicio, ServicioPorHab
 from Facturacion.models import Factura, Detalle, DetallePago
 from rest_framework.views import APIView
 from django.db.models import Q
+import emailHelper
 
 #######################################################################################################
 # Métodos propios
@@ -22,6 +23,11 @@ def validarFecha(serializer):
 def tryGetById(clase, claseId):
     try:
         return clase.objects.get(pk=claseId)
+    except clase.DoesNotExist:
+        return None
+def tryGetByUserId(clase, userId):
+    try:
+        return clase.objects.filter(usuarioId_id=userId)
     except clase.DoesNotExist:
         return None
 
@@ -93,9 +99,11 @@ class ServicioPorHabitacionView(APIView):
 #Reservas
 
 class ReservaView(APIView):
-    def get(self, request, reservaId=None):
+    def get(self, request, reservaId=None, usuarioId=None):
         if reservaId is not None:  # Check if reservaId is provided
             return self.get_by_id(request, reservaId)
+        if usuarioId is not None:
+            return self.get_by_user_id(request, usuarioId)
         reservas = Reserva.objects.all()
         serializer = ReservaSerializer(reservas, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -105,6 +113,13 @@ class ReservaView(APIView):
         if reserva is None:
             return Response({'error': 'Reserva not found'}, status=status.HTTP_404_NOT_FOUND)
         serializer = ReservaSerializer(reserva)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_by_user_id(self, request, userId):
+        print(userId)
+        reserva = tryGetByUserId(Reserva, userId)
+        if reserva is None:
+            return Response({'error': 'Reserva not found'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = ReservaSerializer(reserva, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request):
@@ -221,3 +236,20 @@ class DetallePagoView(APIView):
     queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
     lookup_field = 'pk'
+
+#######################################################################################################
+# Consulta / Envío de mails
+class ConsultaView(APIView):
+    def post(self, request):
+        # Obtenemos los datos del formulario
+        nombre = request.data.get('nombre')
+        email = request.data.get('email')
+        mensaje = request.data.get('mensaje')
+
+        # Enviamos el correo electrónico
+        try:
+            emailHelper.enviar_correo_hotel(mensaje, nombre, email, "hcalifornia.info@gmail.com") 
+            emailHelper.enviar_correo_cliente(mensaje, nombre, email, "hcalifornia.info@gmail.com") 
+            return Response({"mensaje": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

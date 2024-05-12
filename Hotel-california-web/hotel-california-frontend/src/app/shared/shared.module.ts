@@ -6,6 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ButtonAppstoreComponent } from './components/button-appstore/button-appstore.component';
 
 
 
@@ -15,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     HeaderComponent,
     FooterComponent,
+    ButtonAppstoreComponent,
   ],
   imports: [
     BrowserModule,

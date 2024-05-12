@@ -20,7 +20,7 @@
                             <ul class="socialNets text-start">
 
                                 <li> <a href="#"><i class="fa-solid fa-map-marked"></i>
-                                        {{direccionHotel}}, C.P.: {{cpHotel}}, {{ciudadHotel}}, {{provinciaHotel}}, {{paisHotel}} 
+                                        {{direccionHotel}}, C.P.: {{cpHotel}}, {{ciudadHotel}}, {{provinciaHotel}}, {{paisHotel}}
                                     </a></li>
 
                                 <li> <a href="#"><i class="fa-solid fa-phone"></i>
@@ -40,7 +40,7 @@
 
                                 <li>
                                     <a href="#"> <i class="fa-brands fa-twitter"></i> Twitter: {{twitterHotel}} </a>
-                                </li>  
+                                </li>
                             </ul>
                         </div>
                         <div class="col-lg col-md-12 map">
@@ -70,6 +70,9 @@
                                             electrónico</label>
                                         <div class="text-danger" *ngIf="consultaForm.get('email')!.invalid && (consultaForm.get('email')!.touched || consultaForm.get('email')!.dirty)">
                                             El email es requerido y debe ser válido.
+                                        </div>
+                                        <div class="text-danger" *ngIf="consultaForm.get('email')!.hasError('invalidEmail') && consultaForm.get('email')!.touched">
+                                          El correo electrónico debe terminar en  ".com"
                                         </div>
                                     </div>
                                 </div>

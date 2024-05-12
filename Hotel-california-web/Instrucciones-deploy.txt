@@ -91,7 +91,9 @@ Entonces estaremos en la carpeta principal del backend, o lógica/ modelo de neg
 
 12) Abrir XAMPP desde el logo "INICIO" de windows o nuestro sistema operativo, recomendable tener acceso al panel de control con los servicios que nos ofrece XAMPP.
 
-13) Debemos levantar el servidor apache y el servicio Mysql, para eso apretamos "START" en ambas tecnologías del panel de control. Una vez que nos aseguremos que están los dos funcionales, ya que estarán resaltados en color verde y con un número especifico de puerto, vamos al siguiente paso:
+13) Debemos levantar el servidor apache y el servicio Mysql, para eso apretamos "START" en ambas tecnologías del panel de control. Una vez que nos aseguremos que están los dos funcionales, ya que estarán resaltados en color verde y con un número especifico de puerto, vamos a los siguientes pasos:
+
+13.a) Debemos crear la Base de Datos, y levantarla, para lo cual, desde phpmyadmin (http://localhost/phpmyadmin/, accediendo allí clickeando en el botón "Admin" correspondiente a MySQL del XAMPP Control Panel) en la 6ta viñeta "Importar" debemos cargar el Script "hotelcalifornia.sql" - disponible en la misma raíz donde se encuentra este archivo aclaratorio-, eligiéndolo desde el botón "Examinar" (dejando todas las opciones que aparecen por defecto) y luego, al final "Importar". Así se creará la Base de Datos, las tablas y los primeros registros.
 
 13.b) Debemos tener en cuenta que el usuario administrador por defecto con todos los permisos disponibles es admin@admin.com y la contraseña "1234" sin comillas.
 En el caso que queramos generar un nuevo administrador o super usuario, debemos situarnos en la carpeta principal del backend: (......\2023-Fullstack-Proyecto-Integrador\HotelCalifornia2023\BackendHotelCalifornia>) y allí en terminal ejecutar el siguiente comando: "python manage.py createsuperusuario.
@@ -108,7 +110,11 @@ Contraseña: telefono-usuario
 Si todos los datos ingresados son correctos, se mostrará el siguiente mensaje: 
 "Superuser created successfully."
 
-14) Una vez instaladas todas las dependencias necesarias y con el servidor apache de XAMPP levantado, el cual deja funcional y accesible nuestra base de datos, ejecutamos el comando en la terminal de nuestro editor de código, en la localización que nos quedamos en el PUNTO 10 (......\2023-Fullstack-Proyecto-Integrador\HotelCalifornia2023\BackendHotelCalifornia>): "python manage.py runserver"
+14) Teclea "pip install python-dotenv" (esto funciona, para generar una variable de entorno, dónde almacenaremos la contraseña del email que utilizará la web para hacer el envío de sus consultas)
+
+15) Una vez instaladas todas las dependencias necesarias y con el servidor apache de XAMPP levantado, el cual deja funcional y accesible nuestra base de datos, ejecutamos el comando en la terminal de nuestro editor de código, en la localización que nos quedamos en el PUNTO 10 (......\2023-Fullstack-Proyecto-Integrador\HotelCalifornia2023\BackendHotelCalifornia>): "python manage.py runserver"
+
+15. b) Puede que aparezca un mensaje que nos sugiera hacer una migración, al haber sido diferente la Base de Datos (sobre todo si es la primera vez que se ejecuta), para lo cual, previo al paso anterior hay que utilizar sl siguiente comando para realizar la migración: "python manage.py migrate", y luego sí el paso 14.
 
 15) Debe aparecer un mensaje similar al siguiente:
 
@@ -125,3 +131,4 @@ Si experimenta alguna incidencia al seguir los pasos, por favor dirigirse al sta
 Desde ya muchas gracias por su tiempo,
 
 ATTE Staff HOTEL CALIFORNIA - INNOVACION IT
+
