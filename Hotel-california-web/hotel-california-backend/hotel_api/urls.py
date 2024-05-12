@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ReservaView, FacturaView, DetallePagoView, DetalleView, HabitacionView, ServicioView, ServicioPorHabitacionView
+from .views import ReservaView, FacturaView, DetallePagoView, DetalleView, HabitacionView, ServicioView, ServicioPorHabitacionView, ConsultaView
 
 urlpatterns = [
     path('habitacion/', HabitacionView.as_view(), name='habitaciones'),
@@ -15,4 +15,5 @@ urlpatterns = [
     path('detallePago/<int:detallePagoId>/', DetallePagoView.as_view(), name='detalle_pago'),
     path('servicio/', ServicioView.as_view(), name='servicio'),
     path('servicio/<int:habitacionId>/', ServicioPorHabitacionView.as_view(), name='servicio_por_habitacion'),
+    path('consulta/', ConsultaView.as_view(), name='consulta'),
 ]

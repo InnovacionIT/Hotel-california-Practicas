@@ -4,6 +4,7 @@ from .serializers import ReservaSerializer, FacturaSerializer, DetalleSerializer
 from GestionReservas.models import Reserva, Habitacion, Servicio, ServicioPorHabitacion
 from Facturacion.models import Factura, Detalle, DetallePago
 from rest_framework.views import APIView
+import emailHelper
 
 #######################################################################################################
 # Métodos propios
@@ -193,3 +194,20 @@ class DetallePagoView(APIView):
     queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
     lookup_field = 'pk'
+
+#######################################################################################################
+# Consulta / Envío de mails
+class ConsultaView(APIView):
+    def post(self, request):
+        # Obtenemos los datos del formulario
+        nombre = request.data.get('nombre')
+        email = request.data.get('email')
+        mensaje = request.data.get('mensaje')
+
+        # Enviamos el correo electrónico
+        try:
+            emailHelper.enviar_correo_hotel(mensaje, nombre, email, "hcalifornia.info@gmail.com") 
+            emailHelper.enviar_correo_cliente(mensaje, nombre, email, "hcalifornia.info@gmail.com") 
+            return Response({"mensaje": "Correo enviado correctamente"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -37,6 +37,19 @@ export class ProductCardComponent implements OnInit {
     this.selectedLeaveDate = this.leaveDate;
   }
   servicios!: any[]
+
+  public imagenesPorHabitacion: { [key: number]: string } = {
+    1: '../../../../assets/img/habitaciones/doble.jpg',
+    2: '../../../../assets/img/habitaciones/doble.jpg',
+    3: '../../../../assets/img/habitaciones/suiteDoble.jpg',
+    4: '../../../../assets/img/habitaciones/single.jpg',
+    5: '../../../../assets/img/habitaciones/suiteDoble.jpg',
+    6: '../../../../assets/img/habitaciones/single.jpg',
+    7: '../../../../assets/img/habitaciones/single.jpg',
+    8: '../../../../assets/img/habitaciones/suite.jpg'
+  };
+
+
   ngOnInit(): void {
     this.loginService.userData.subscribe({
       next: (user) => {

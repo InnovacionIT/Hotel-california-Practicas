@@ -118,12 +118,13 @@ a:hover {
 }
  .form-control{
    font-size: var(--tamanio-fuente);
-   color: var(--color-claro);
+   color: var(--color-oscuro);
+   background-color: var(--color-claro);
  }
 
  .form-control:focus {
-    color: var(--color-claro);
-    background-color:var(--resaltador);
+    color: var(--color-oscuro);
+    background-color:var(--color-claro);
     border-color: transparent;
     outline: 0;
     box-shadow: var(--shadow-complementario);
@@ -143,7 +144,7 @@ label {
     /* width:10rem; */
     border: none;
     border-bottom: 2px solid var(--color-claro);
-    background-color: transparent;
+    background-color: var(--color-claro);
     border-radius: 0;
 }
 
@@ -183,7 +184,7 @@ label {
 
 .ng-valid:not(form).ng-touched {
     border-left: 5px solid #42A948;
-    
+
 }
 
 .ng-invalid:not(form).ng-touched {
