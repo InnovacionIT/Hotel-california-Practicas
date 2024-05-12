@@ -83,8 +83,17 @@ export class ReservasComponent implements OnInit {
 
     }
 
-    cancelarReserva(){
-      // TODO
+    cancelarReserva(reservaId: number) {
+      this.reservacionService.eliminarReserva(reservaId).subscribe({
+        next: (data) => {
+            console.log(data)
+            this.getReservasUsuarioLogueado();
+            this.router.navigateByUrl('/reservas') 
+          },
+          error: (error) => {
+            console.log(error)
+          }
+        });
     }
     
     mostrarForm(){

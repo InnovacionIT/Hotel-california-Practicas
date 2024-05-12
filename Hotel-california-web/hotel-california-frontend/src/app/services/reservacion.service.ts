@@ -58,8 +58,8 @@ export class ReservacionService {
 
   //DELETE
   eliminarReserva(reservaId: number): Observable<any> {
-    const url = `${this.reservacionUrl}reserva/${reservaId}`; // Reemplaza 'reservas' y '${reservaId}' con las URL correspondientes en tu backend
-    return this.http.delete<any>(url);
+    const url = `${this.reservacionUrl}reserva/${reservaId}`; 
+    return this.http.delete<ReservaInterface>(url);
   }
 
   //verifica la disponibilidad de una habitación específica para un rango de fechas dado

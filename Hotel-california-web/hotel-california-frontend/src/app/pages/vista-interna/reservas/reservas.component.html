@@ -25,7 +25,7 @@
                 {{ reservaPagada(reserva) ? 'Pagada' : 'Pagar' }}
               </button></td>
               <td><button type="button" class="btn btn-primary" (click)="mostrarForm()">Editar</button></td>
-              <td><button type="button" class="btn btn-danger" (click)="cancelarReserva()">Cancelar Reserva</button></td>
+              <td><button type="button" class="btn btn-danger" (click)="cancelarReserva(reserva.reservaId)">Cancelar Reserva</button></td>
             </tr>
           </tbody>
     </table>
