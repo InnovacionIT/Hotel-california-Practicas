@@ -153,6 +153,7 @@ createReservation(reserva: any) {
       next: (data) => {
         console.log(data)
         console.log('Reserva enviada:', reserva);
+        this.router.navigateByUrl('/reservas') 
       },
       error: (error) => {
         console.log(error)
