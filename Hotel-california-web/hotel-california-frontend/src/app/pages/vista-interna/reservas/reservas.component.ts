@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, forkJoin } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { ReservacionService } from '../../../services/reservacion.service';
 import { LoginService } from 'src/app/services/login.service';
-import { Router } from '@angular/router';
+import { FacturaService } from 'src/app/services/factura.service';
 import { User } from 'src/app/services/user';
 import { ReservaInterface } from 'src/app/interface/reserva.interface';
 import { Habitacion } from 'src/app/models/habitacion';
-import { Observable, forkJoin } from 'rxjs';
+import { Detalle, Factura } from 'src/app/services/factura';
 
 @Component({
   selector: 'app-reservas',
@@ -23,6 +26,7 @@ export class ReservasComponent implements OnInit {
 
   constructor(
     private reservacionService: ReservacionService, 
+    private facturaService: FacturaService,
     private loginService: LoginService, 
     private router : Router,
     ) { }
@@ -71,19 +75,28 @@ export class ReservasComponent implements OnInit {
       return observables;
     }
 
+    reservaPagada(reserva: ReservaInterface): boolean {
+      return false;
+    }
+
+    pagar(reserva: ReservaInterface): void {
+
+    }
 
     cancelarReserva(){
       // TODO
     }
+    
     mostrarForm(){
       this.editarDatos = true;
     }
-   enviar(){
-    this.editarDatos = false;
-    this.cambiosDatos = true
-    setTimeout(() => {
-      this.router.navigate(['/nosotros'])}
-      ,6000);}
+
+    enviar(){
+      this.editarDatos = false;
+      this.cambiosDatos = true
+      setTimeout(() => {
+        this.router.navigate(['/nosotros'])}
+        ,6000);}
   
 //     getFactura():void {
 //       this.facturaService.Factura().subscribe(factura => {

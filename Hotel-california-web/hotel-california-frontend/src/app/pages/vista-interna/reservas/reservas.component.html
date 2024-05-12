@@ -13,10 +13,17 @@
           </thead>
           <tbody >
             <tr *ngFor="let reserva of misReservas">
-              <td>{{reserva.descripcion}}</td>
+              <td>{{ reserva.descripcion }}</td>
               <td>{{ reserva.fechaIngreso }}</td>
               <td>{{ reserva.fechaEgreso }}</td>
-              <td>Pagada/Pagar</td>
+              <td><button type="button" class="btn"
+                [class.btn-secondary]="reservaPagada(reserva)"
+                [class.btn-success]="!reservaPagada(reserva)"
+                [class.text-white]="!reservaPagada(reserva)"
+                [disabled]="reservaPagada(reserva)"
+                (click)="reservaPagada(reserva) ? null : pagar(reserva)">
+                {{ reservaPagada(reserva) ? 'Pagada' : 'Pagar' }}
+              </button></td>
               <td><button type="button" class="btn btn-primary" (click)="mostrarForm()">Editar</button></td>
               <td><button type="button" class="btn btn-danger" (click)="cancelarReserva()">Cancelar Reserva</button></td>
             </tr>
