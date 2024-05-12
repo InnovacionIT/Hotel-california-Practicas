@@ -9,7 +9,7 @@ export class Habitacion {
     public piso:number,
     public tipoHabitacion:string,
     //public descripcion:string,
-    public servicios:Array<any>,
+    public servicios:string[],
     //public disponible:boolean,
 
     ){}
