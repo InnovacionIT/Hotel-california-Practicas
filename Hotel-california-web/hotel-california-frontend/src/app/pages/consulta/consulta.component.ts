@@ -12,7 +12,7 @@ export class ConsultaComponent implements OnInit {
 
 nombreHotel = 'Hotel California';
 infoHotel = 'Descubre nuestro hotel con spa: relajación, tratamientos rejuvenecedores y una experiencia inolvidable. ¡Reserva ahora y déjate consentir! Comunícate con nosotros para más información.';
-direccionHotel = 'Calle Falsa 123';
+direccionHotel = 'Gdor Álvarez 600';
 cpHotel = '4250';
 ciudadHotel = 'Villa Carlos Paz';
 provinciaHotel = 'Córdoba';
