@@ -7,6 +7,7 @@ urlpatterns = [
     path('habitacion/<str:estado>/', HabitacionView.as_view(), name='estado'),
     path('reserva/', ReservaView.as_view(), name='reserva_lista'),
     path('reserva/<int:reservaId>/', ReservaView.as_view(), name='reserva'),
+    path('reserva/user/<int:usuarioId>/', ReservaView.as_view(), name='reserva_user'),
     path('factura/', FacturaView.as_view(), name='factura_lista'),
     path('factura/<int:facturaId>/', FacturaView.as_view(), name='factura'),
     path('detalle/', DetalleView.as_view(), name='detalle_lista'),

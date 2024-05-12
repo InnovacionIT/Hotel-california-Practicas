@@ -24,6 +24,11 @@ def tryGetById(clase, claseId):
         return clase.objects.get(pk=claseId)
     except clase.DoesNotExist:
         return None
+def tryGetByUserId(clase, userId):
+    try:
+        return clase.objects.filter(usuarioId_id=userId)
+    except clase.DoesNotExist:
+        return None
 
 ##########################################################################################################
 # Habitaciones
@@ -82,9 +87,11 @@ class ServicioPorHabitacionView(APIView):
 #Reservas
 
 class ReservaView(APIView):
-    def get(self, request, reservaId=None):
+    def get(self, request, reservaId=None, usuarioId=None):
         if reservaId is not None:  # Check if reservaId is provided
             return self.get_by_id(request, reservaId)
+        if usuarioId is not None:
+            return self.get_by_user_id(request, usuarioId)
         reservas = Reserva.objects.all()
         serializer = ReservaSerializer(reservas, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -94,6 +101,13 @@ class ReservaView(APIView):
         if reserva is None:
             return Response({'error': 'Reserva not found'}, status=status.HTTP_404_NOT_FOUND)
         serializer = ReservaSerializer(reserva)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_by_user_id(self, request, userId):
+        print(userId)
+        reserva = tryGetByUserId(Reserva, userId)
+        if reserva is None:
+            return Response({'error': 'Reserva not found'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = ReservaSerializer(reserva, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request):
