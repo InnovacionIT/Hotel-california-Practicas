@@ -42,6 +42,9 @@ export class ReservacionService {
     return this.http.get<ReservaInterface>(url);
   }
 
+  getReservasUsuario(userId: number): Observable<ReservaInterface[]> {
+    return this.http.get<ReservaInterface[]>(this.reservacionUrl + "reserva/user/" + userId + "/");
+  }
  /*  getReservasPorHabitacion(roomId: number): Observable<ReservaInterface[]> {
     const url = `${this.reservacionUrl}/reservas/habitacion/${roomId}`;
     return this.http.get<ReservaInterface[]>(url);

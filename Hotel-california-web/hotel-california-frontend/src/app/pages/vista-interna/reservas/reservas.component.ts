@@ -18,9 +18,9 @@ export class ReservasComponent implements OnInit {
   mostrarReserva : boolean = true;
   Editar : boolean = false;
   editarDatos : boolean = true;
-  cambiosDatos : boolean = false;
+  cambiosDatos : boolean = false; 
   // monto = 19200;
-  factura: number = 100000037;
+  // factura: number = 100000037;
   // habitacionId: number = 1; // Valor de ejemplo para habitacionId
   // reservaId: number = 1; // Valor de ejemplo para reservaId
   misReservas: Array<ReservaInterface>=[];
@@ -54,10 +54,11 @@ export class ReservasComponent implements OnInit {
     };
     
     getReservasUsuarioLogueado():void {
-      this.reservacionService.getReservas().subscribe(
+      this.reservacionService.getReservasUsuario(this.usuarioId).subscribe(
         reservas => {
           // Filtra las reservas que sean de este usuarion logueado.
-          this.misReservas = reservas.filter(r=> r.usuarioId == this.usuarioId);
+          // this.misReservas = reservas.filter(r=> r.usuarioId == this.usuarioId);
+          this.misReservas = reservas;
           console.log("misReservas", this.misReservas);
         });
     }
