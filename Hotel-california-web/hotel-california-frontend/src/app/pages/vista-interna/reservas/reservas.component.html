@@ -8,7 +8,6 @@
               <th scope="col">Fecha Egreso</th>
               <th scope="col"></th>
               <th scope="col"></th>
-              <th scope="col"></th>
             </tr>
           </thead>
           <tbody >
@@ -24,7 +23,6 @@
                 (click)="reservaPagada(reserva) ? null : pagar(reserva)">
                 {{ reservaPagada(reserva) ? 'Pagada' : 'Pagar' }}
               </button></td>
-              <td><button type="button" class="btn btn-primary" (click)="mostrarForm()">Editar</button></td>
               <td><button type="button" class="btn btn-danger" (click)="cancelarReserva(reserva.reservaId)">Cancelar Reserva</button></td>
             </tr>
           </tbody>
