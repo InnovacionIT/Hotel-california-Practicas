@@ -1,4 +1,4 @@
-<br>           
+<br>
 <div class="table-responsive-lg"  *ngIf="misReservas.length> 0">
     <table class="table">
         <thead class="thead-dark">
@@ -28,6 +28,7 @@
           </tbody>
     </table>
   </div>
+  <p *ngIf="misReservas.length === 0" class="btn btn-danger">Usted no tiene reservas realizadas</p>
 <div class="form" *ngIf="editarDatos">
 <form  >
   <div class="form-group">
