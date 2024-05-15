@@ -80,7 +80,7 @@ export class ReservasComponent implements OnInit {
     }
 
     pagar(reserva: ReservaInterface): void {
-
+      alert('En este momento no podemos procesar su pago. Por favor comuníquese con la Administración del Hotel. Disculpe las molestias ocasionadas.')
     }
 
     cancelarReserva(reservaId: number) {

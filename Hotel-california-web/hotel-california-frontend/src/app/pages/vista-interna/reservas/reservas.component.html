@@ -15,7 +15,8 @@
               <td>{{ reserva.descripcion }}</td>
               <td>{{ reserva.fechaIngreso }}</td>
               <td>{{ reserva.fechaEgreso }}</td>
-              <td><button type="button" class="btn"
+              <td>
+                <button type="button" class="btn"
                 [class.btn-secondary]="reservaPagada(reserva)"
                 [class.btn-success]="!reservaPagada(reserva)"
                 [class.text-white]="!reservaPagada(reserva)"
@@ -23,7 +24,7 @@
                 (click)="reservaPagada(reserva) ? null : pagar(reserva)">
                 {{ reservaPagada(reserva) ? 'Pagada' : 'Pagar' }}
               </button></td>
-              <td><button type="button" class="btn btn-danger" (click)="cancelarReserva(reserva.reservaId)">Cancelar Reserva</button></td>
+               <td><button type="button" class="btn btn-danger" (click)="cancelarReserva(reserva.reservaId)">Cancelar Reserva</button></td>
             </tr>
           </tbody>
     </table>
