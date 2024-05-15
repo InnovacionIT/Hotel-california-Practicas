@@ -23,6 +23,7 @@ export class ReservasComponent implements OnInit {
   usuarioId: number = 0;
   userData?:User;
   habitaciones: Array<Habitacion> = [];
+  pagoExitoso: boolean = false;
 
   constructor(
     private reservacionService: ReservacionService,
@@ -80,7 +81,7 @@ export class ReservasComponent implements OnInit {
     }
 
     pagar(reserva: ReservaInterface): void {
-      alert('En este momento no podemos procesar su pago. Por favor comuníquese con la Administración del Hotel. Disculpe las molestias ocasionadas.')
+      this.pagoExitoso = true
     }
 
     cancelarReserva(reservaId: number) {

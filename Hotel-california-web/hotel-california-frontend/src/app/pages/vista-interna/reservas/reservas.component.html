@@ -26,9 +26,13 @@
               </button></td>
                <td><button type="button" class="btn btn-danger" (click)="cancelarReserva(reserva.reservaId)">Cancelar Reserva</button></td>
             </tr>
+
           </tbody>
-    </table>
-  </div>
+          <div *ngIf="pagoExitoso" class="alert alert-primary" role="alert">
+            En este momento no podemos procesar su pago. Por favor comuníquese con la Administración del Hotel. Disculpe las molestias ocasionadas.
+          </div>
+        </table>
+      </div>
   <p *ngIf="misReservas.length === 0" class="btn btn-danger">Usted no tiene reservas realizadas</p>
 <div class="form" *ngIf="editarDatos">
 <form  >
