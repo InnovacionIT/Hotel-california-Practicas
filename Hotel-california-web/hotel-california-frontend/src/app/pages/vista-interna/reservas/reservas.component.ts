@@ -18,21 +18,22 @@ import { Detalle, Factura } from 'src/app/services/factura';
 
 export class ReservasComponent implements OnInit {
   editarDatos : boolean = false;
-  cambiosDatos : boolean = false; 
+  cambiosDatos : boolean = false;
   misReservas: Array<ReservaInterface>=[];
   usuarioId: number = 0;
   userData?:User;
   habitaciones: Array<Habitacion> = [];
+  pagoExitoso: boolean = false;
 
   constructor(
-    private reservacionService: ReservacionService, 
+    private reservacionService: ReservacionService,
     private facturaService: FacturaService,
-    private loginService: LoginService, 
+    private loginService: LoginService,
     private router : Router,
     ) { }
 
    ngOnInit(): void {
-    
+
     // Traemos unfo del usuario logueado
     this.loginService.currentUserData.subscribe({
       next:(userData)=>{
@@ -41,7 +42,7 @@ export class ReservasComponent implements OnInit {
         this.usuarioId = userData.usuarioId
         console.log("usuarioId", this.usuarioId);
       }
-    })    
+    })
 
     // Obtenemos las reservas de este usuario
     this.getReservasUsuarioLogueado();
@@ -80,22 +81,28 @@ export class ReservasComponent implements OnInit {
     }
 
     pagar(reserva: ReservaInterface): void {
-
+      this.pagoExitoso = true
     }
 
     cancelarReserva(reservaId: number) {
       this.reservacionService.eliminarReserva(reservaId).subscribe({
         next: (data) => {
-            console.log(data)
-            this.getReservasUsuarioLogueado();
-            this.router.navigateByUrl('/reservas') 
-          },
-          error: (error) => {
-            console.log(error)
+          console.log(data);
+          if (data === null) {
+            if (this.misReservas.length === 1) {
+              this.misReservas = [];
+            } else {
+              this.getReservasUsuarioLogueado();
+            }
           }
-        });
+          this.router.navigateByUrl('/reservas');
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
     }
-    
+
     mostrarForm(){
       this.editarDatos = true;
     }
@@ -106,6 +113,5 @@ export class ReservasComponent implements OnInit {
       setTimeout(() => {
         this.router.navigate(['/nosotros'])}
         ,6000);
-    }  
+    }
 }
-   
