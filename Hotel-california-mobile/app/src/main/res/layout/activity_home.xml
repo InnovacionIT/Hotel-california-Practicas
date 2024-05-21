@@ -140,14 +140,14 @@
             android:id="@+id/radioButtonNueva2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nueva2"
+            android:text="@string/HabitacionDoble"
             android:textAlignment="center" />
 
         <RadioButton
             android:id="@+id/radioButtonNueva1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nueva1"
+            android:text="@string/HabitacionCuadruple"
             android:textAlignment="center" />
 
         <RadioButton
