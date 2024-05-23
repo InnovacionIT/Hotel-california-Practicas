@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hotelcaliforniaNegocio.GestorDeClientes;
 
@@ -35,6 +38,38 @@ public class MainActivity extends AppCompatActivity {
 
         // Obtenemos un gestor y le pasamos el Contexto para que haga la conexión a la DB
         gestorDeClientes = new GestorDeClientes(this);
+
+        // Encuentra el botón flotante
+        ImageButton fabWhatsApp = findViewById(R.id.fabWhatsApp);
+
+        // Establece un listener para el botón
+        fabWhatsApp.setOnClickListener(view -> {
+
+            String phoneNumber = "+5493513441382"; // El número de teléfono deseado con el código de país
+
+            // Mensaje predeterminado
+            String message = "Hola, quiero hacer una consulta sobre la aplicación de Hotel California";
+
+            // Codifica el mensaje para que sea parte de la URL
+            try {
+                message = Uri.encode(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Intent para abrir WhatsApp con el número de teléfono y el mensaje predeterminado
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            String url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + message;
+            intent.setData(Uri.parse(url));
+
+            // Verifica si WhatsApp está instalado y ejecuta el Intent
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            } else {
+                // Muestra un mensaje si WhatsApp no está instalado
+                Toast.makeText(MainActivity.this, "WhatsApp no está instalado", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void iraregistro(View view){
