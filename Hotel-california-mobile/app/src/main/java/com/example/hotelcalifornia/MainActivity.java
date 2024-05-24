@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,17 @@ public class MainActivity extends AppCompatActivity {
     GestorDeClientes gestorDeClientes;
     private static final String TAG_ERROR_LOGIN = "Login incorrecto";
 
+    private boolean isWhatsAppInstalled() {
+        PackageManager packageManager = getPackageManager();
+        try {
+            packageManager.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Establece un listener para el botón
         fabWhatsApp.setOnClickListener(view -> {
-
-            String phoneNumber = "+5493513441382"; // El número de teléfono deseado con el código de país
+            String phoneNumber = "5493513441382"; // El número de teléfono deseado con el código de país
 
             // Mensaje predeterminado
             String message = "Hola, quiero hacer una consulta sobre la aplicación de Hotel California";
@@ -57,19 +68,17 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            // Intent para abrir WhatsApp con el número de teléfono y el mensaje predeterminado
-            Intent intent = new Intent(Intent.ACTION_VIEW);
+            // Construcción de la URL
             String url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + message;
-            intent.setData(Uri.parse(url));
+            Log.d("WhatsAppURL", "URL: " + url);
 
-            // Verifica si WhatsApp está instalado y ejecuta el Intent
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivity(intent);
-            } else {
-                // Muestra un mensaje si WhatsApp no está instalado
-                Toast.makeText(MainActivity.this, "WhatsApp no está instalado", Toast.LENGTH_SHORT).show();
-            }
+            // Intent para abrir el enlace en el navegador
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
         });
+
+
+
     }
 
     public void iraregistro(View view){
