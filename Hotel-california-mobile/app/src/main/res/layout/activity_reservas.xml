@@ -97,7 +97,7 @@
         android:layout_width="104dp"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="192dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="@color/gris"
         android:contentDescription="@string/btnEli"
@@ -107,9 +107,20 @@
         android:textColorLink="@color/clear"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonPagar"
         tools:ignore="TextContrastCheck" />
+
+    <ImageView
+        android:id="@+id/imageHabitacion"
+        android:layout_width="401dp"
+        android:layout_height="177dp"
+        android:layout_marginTop="168dp"
+        android:contentDescription="@string/habitacion_imagen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTipoHab" />
 
     <TextView
         android:id="@+id/textTipoHab"

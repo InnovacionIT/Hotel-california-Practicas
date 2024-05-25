@@ -83,4 +83,5 @@
     <string name="mje_error_select_hab_reserva">* Debe seleccionar una habitación para Reservar</string>
     <string name="HabitacionCuadruple">Habitación Cuadruple</string>
     <string name="HabitacionDoble">Habitación Doble</string>
+    <string name="habitacion_imagen">Imagen de la habitación</string>
 </resources>
