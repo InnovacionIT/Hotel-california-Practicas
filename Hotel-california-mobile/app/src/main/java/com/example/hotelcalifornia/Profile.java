@@ -1,10 +1,13 @@
 package com.example.hotelcalifornia;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -21,10 +24,14 @@ public class Profile extends AppCompatActivity {
     Switch recibeNotSwitch;
     GestorDeClientes gestorDeClientes;
 
+    String url;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
+
 
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -43,6 +50,19 @@ public class Profile extends AppCompatActivity {
         // Inicalizamos switch notificaciones y modificamos datos en la DB segun la selección
         recibeNotSwitch = findViewById(R.id.switchNotificaciones);
         setRecibeNotificacionesSegun(recibeNotSwitch);
+
+        //boton que redirige a la web
+        ImageButton pagWeb = findViewById(R.id.pagWeb);
+        url="https://ispc-hotel-front.vercel.app/nosotros";
+        pagWeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse(url);
+                Intent intent=new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+                startActivity(intent);
+            }
+        });
+
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -72,6 +92,8 @@ public class Profile extends AppCompatActivity {
         });
 
     }
+
+
 
     private void setRecibeNotificacionesSegun(Switch sw) {
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -125,5 +147,7 @@ public class Profile extends AppCompatActivity {
         Intent intent = new Intent(this, Contact.class);
         startActivity(intent);
     }//lleva a contacto atraves del boton contactanos
+
+
 
 }
