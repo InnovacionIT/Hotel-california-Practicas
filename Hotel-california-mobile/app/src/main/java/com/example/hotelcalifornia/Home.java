@@ -69,6 +69,9 @@ public class Home extends AppCompatActivity {
         reservarButton = findViewById(R.id.reservarButton);
         textErrorReservar = findViewById(R.id.textErrorReserva);
 
+
+        cargarHabitaciones();
+
         // Obtenemos todas las habitaciones para mostrarlas
         HabitacionDataAccess habitacionDataAccess = new HabitacionDataAccess(this);
         habitaciones = habitacionDataAccess.getAll();
@@ -106,6 +109,19 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+    private void cargarHabitaciones() {
+        HabitacionDataAccess habitacionDataAccess = new HabitacionDataAccess(this);
+        habitaciones = habitacionDataAccess.getAll();
+        radioGroup.removeAllViews();
+
+        for (Habitacion habitacion : habitaciones) {
+            RadioButton radioButton = new RadioButton(this);
+            String textoRadioButton = habitacion.getHabTipo() + " - $ " + habitacion.getHabPrecio();
+            radioButton.setText(textoRadioButton);
+            radioGroup.addView(radioButton);
+        }
+    }
+
     public void fechaIngreso (View view){
         fechaSal.setText("");
         Calendar calendar = Calendar.getInstance();

@@ -4,13 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hotelcaliforniaNegocio.GestorDeClientes;
 
@@ -21,6 +25,17 @@ public class MainActivity extends AppCompatActivity {
     TextView textErroLogin;
     GestorDeClientes gestorDeClientes;
     private static final String TAG_ERROR_LOGIN = "Login incorrecto";
+
+    private boolean isWhatsAppInstalled() {
+        PackageManager packageManager = getPackageManager();
+        try {
+            packageManager.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -35,6 +50,35 @@ public class MainActivity extends AppCompatActivity {
 
         // Obtenemos un gestor y le pasamos el Contexto para que haga la conexión a la DB
         gestorDeClientes = new GestorDeClientes(this);
+
+        // Encuentra el botón flotante
+        ImageButton fabWhatsApp = findViewById(R.id.fabWhatsApp);
+
+        // Establece un listener para el botón
+        fabWhatsApp.setOnClickListener(view -> {
+            String phoneNumber = "5493513441382"; // El número de teléfono deseado con el código de país
+
+            // Mensaje predeterminado
+            String message = "Hola, quiero hacer una consulta sobre la aplicación de Hotel California";
+
+            // Codifica el mensaje para que sea parte de la URL
+            try {
+                message = Uri.encode(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Construcción de la URL
+            String url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + message;
+            Log.d("WhatsAppURL", "URL: " + url);
+
+            // Intent para abrir el enlace en el navegador
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
+        });
+
+
+
     }
 
     public void iraregistro(View view){
