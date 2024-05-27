@@ -114,7 +114,7 @@ public class Contact extends AppCompatActivity {
 
             MimeMessage mimeMessage = new MimeMessage(session);
             mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-            mimeMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("fedes7777@gmail.com"));
+            mimeMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(client.getEmail()));
 
             String senderEmail = client.getEmail();
             String username = client.getUsuario();
