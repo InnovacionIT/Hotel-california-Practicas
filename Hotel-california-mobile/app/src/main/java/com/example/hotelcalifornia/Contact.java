@@ -1,63 +1,45 @@
 package com.example.hotelcalifornia;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.net.Uri;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.os.BuildCompat;
 
+import com.example.hotelcaliforniaModelo.Cliente;
 import com.example.hotelcaliforniaNegocio.GestorDeClientes;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.Enumeration;
+import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 public class Contact extends AppCompatActivity {
+
+    Cliente client;
     public void goToProfile(View view) {
         Intent intent = new Intent(this, Profile.class);
         finish();
 
     }
-    public void goToHome(View view) {
-        EditText mensajeEditText = findViewById(R.id.editTextText3);
-        String mensaje = mensajeEditText.getText().toString();
-
-        // Dirección de correo electrónico a la que enviar el mensaje
-        String destinatario = "destinatario@example.com";
-
-        // Crear un Intent para enviar el mensaje a través de una aplicación de envío
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-
-        // Establecer el destinatario del correo electrónico
-        sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{destinatario});
-
-        // Establecer el asunto del correo electrónico
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Mensaje desde la aplicación");
-
-        // Establecer el cuerpo del correo electrónico
-        sendIntent.putExtra(Intent.EXTRA_TEXT, mensaje);
-
-        // Establecer el tipo de contenido como texto plano
-        sendIntent.setType("text/plain");
-
-        // Mostrar el selector de aplicaciones para que el usuario elija
-        Intent chooserIntent = Intent.createChooser(sendIntent, "Enviar mensaje con...");
-
-        // Verificar si hay aplicaciones disponibles para manejar el Intent
-        if (sendIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(chooserIntent);
-        } else {
-            // Manejar el caso donde no hay aplicaciones disponibles
-            Toast.makeText(this, "No hay aplicaciones disponibles para enviar el mensaje.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     BottomNavigationView bottomNavigationView;
     @Override
@@ -68,12 +50,11 @@ public class Contact extends AppCompatActivity {
         TextView textHolaUsuario = findViewById(R.id.holaUsuario);
 
         GestorDeClientes gestorDeClientes = new GestorDeClientes(this);
+        client = gestorDeClientes.getClienteLogueado();
+        String fullName = client.getUsuario();
+        String name = fullName.split(" ")[0]; // Divide el nombre completo en palabras usando un espacio en blanco como separador
 
-        String nombreCompleto = gestorDeClientes.getClienteLogueado().getUsuario();
-        String[] partes = nombreCompleto.split(" "); // Divide el nombre completo en palabras usando un espacio en blanco como separador
-        String nombre = partes[0]; // Obtiene la primera palabra, que es el nombre
-
-        textHolaUsuario.setText("Hola " + nombre + "!");
+        textHolaUsuario.setText("Hola " + name + "!");
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.menu);
@@ -105,6 +86,81 @@ public class Contact extends AppCompatActivity {
                 return false;
             }
         });
+
+    }
+
+
+    public void buttonSendEmail(View view) {
+
+        try {
+            String host = "smtp.gmail.com";
+
+            Properties properties = System.getProperties();
+
+            properties.put("mail.smtp.host", host);
+            properties.put("mail.smtp.port", "465");
+            properties.put("mail.smtp.ssl.enable", "true");
+            properties.put("mail.smtp.auth", "true");
+            String password = BuildConfig.EMAIL_PASSWORD;
+            String email = BuildConfig.EMAIL_USERNAME;
+
+            Session session = Session.getInstance(properties, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(email, password);
+                }
+            });
+
+
+            MimeMessage mimeMessage = new MimeMessage(session);
+            mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            mimeMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("fedes7777@gmail.com"));
+
+            String senderEmail = client.getEmail();
+            String username = client.getUsuario();
+
+            EditText subject = findViewById(R.id.subject);
+            EditText message = findViewById(R.id.message);
+
+            if(message.getText() == null || message.getText().toString().isEmpty()) {
+                Toast.makeText(this, "El mensaje no debe estar vacío", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(subject.getText() == null) {
+                mimeMessage.setSubject("Hotel California Mobile");
+            } else {
+                mimeMessage.setSubject(subject.getText().toString());
+            }
+
+            String messageStr = message.getText().toString();
+            String emailTemplate = "<h1>Hotel California</h1>" +
+                    "<p>Enviado por: "+ senderEmail + " ("+username +")" + "</p>" +
+                    "<p>Mensaje: " + messageStr + "</p>";
+
+            mimeMessage.setContent(emailTemplate, "text/html; charset=utf-8");
+
+
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                try {
+                    Transport.send(mimeMessage);
+                } catch (MessagingException e) {
+                    Toast.makeText(this, "¡Algo ha ocurrido! Intente nuevamente", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            });
+            executor.shutdown();
+            Toast.makeText(this, "¡El mensaje se envió correctamente!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), Home.class);
+            startActivity(intent);
+        } catch (AddressException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
 
     }
 

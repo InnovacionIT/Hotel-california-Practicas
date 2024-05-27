@@ -81,4 +81,6 @@
     <string name="empty">\"\"</string>
     <string name="mje_error_completar_fechas_reserva">* Debe completar la Fecha de Ingreso y Salida</string>
     <string name="mje_error_select_hab_reserva">* Debe seleccionar una habitación para Reservar</string>
+    <string name="name">Juan Perez</string>
+    <string name="subject">Asunto</string>
 </resources>
