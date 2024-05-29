@@ -85,4 +85,6 @@
     <string name="whatsapp">Whatsapp</string>
     <string name="HabitacionCuadruple">Habitación Cuadruple</string>
     <string name="HabitacionDoble">Habitación Doble</string>
+    <string name="name">Juan Perez</string>
+    <string name="subject">Asunto</string>
 </resources>
