@@ -158,10 +158,37 @@ public class ReservaDataAccess implements IWritableDataAccess<Reserva> {
         nuevoRegistro.put("pagada", entidad.isPagada());
 
         if (db != null) {
+            // Verificar si ya existe una reserva para esa habitación en las fechas dadas
+            String query = "SELECT COUNT(*) FROM Reserva WHERE habitacionId = ? AND " +
+                    "(? BETWEEN chechIn AND checkOut OR ? BETWEEN chechIn AND checkOut OR " +
+                    "chechIn BETWEEN ? AND ? OR checkOut BETWEEN ? AND ?)";
+            String[] selectionArgs = new String[] {
+                    String.valueOf(entidad.getHabitacion().getId()),
+                    formatoFecha.format(entidad.getCheckIn()),
+                    formatoFecha.format(entidad.getCheckOut()),
+                    formatoFecha.format(entidad.getCheckIn()),
+                    formatoFecha.format(entidad.getCheckOut()),
+                    formatoFecha.format(entidad.getCheckIn()),
+                    formatoFecha.format(entidad.getCheckOut())
+            };
+
+            Cursor cursor = db.rawQuery(query, selectionArgs);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int count = cursor.getInt(0);
+                cursor.close();
+
+                if (count > 0) {
+                    // Ya existe una reserva para esa habitación en las fechas dadas
+                    return;
+                }
+            }
+
             //Insertamos el registro en la base de datos
             db.insert("Reserva", null, nuevoRegistro);
         }
     }
+
 
     @Override
     public Reserva update(Reserva entidad) {
