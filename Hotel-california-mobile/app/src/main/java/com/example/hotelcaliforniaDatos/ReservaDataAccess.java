@@ -179,7 +179,7 @@ public class ReservaDataAccess implements IWritableDataAccess<Reserva> {
                 cursor.close();
 
                 if (count > 0) {
-                    // Ya existe una reserva para esa habitación en las fechas dadas
+                    // Ya existe una reserva para esa habitación en las fechas
                     return;
                 }
             }
