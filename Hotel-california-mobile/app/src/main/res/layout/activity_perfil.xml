@@ -138,4 +138,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/pagWeb"
+        android:layout_width="69dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="167dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="175dp"
+        android:layout_marginBottom="19dp"
+        android:background="@color/white"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:focusable="true"
+        android:foregroundGravity="center"
+        android:onClick="goToWeb"
+        app:backgroundTint="@color/white"
+        app:fabCustomSize="70dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        app:maxImageSize="55dp"
+        app:srcCompat="@drawable/logohc" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="121dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="121dp"
+        android:layout_marginBottom="7dp"
+        android:text="@string/visita"
+        app:layout_constraintBottom_toTopOf="@+id/pagWeb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
