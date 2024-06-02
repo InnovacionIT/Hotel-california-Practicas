@@ -17,11 +17,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.hotelcaliforniaDatos.HabitacionDataAccess;
-import com.example.hotelcaliforniaDatos.ReservaDataAccess;
 import com.example.hotelcaliforniaModelo.Cliente;
 import com.example.hotelcaliforniaModelo.Habitacion;
 import com.example.hotelcaliforniaModelo.Reserva;
 import com.example.hotelcaliforniaNegocio.GestorDeClientes;
+import com.example.hotelcaliforniaNegocio.GestorDeReservas;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -37,7 +37,7 @@ public class Home extends AppCompatActivity {
     TextView textErrorReservar;
     BottomNavigationView bottomNavigationView;
     Button reservarButton;
-    ReservaDataAccess reservaDA;
+    GestorDeReservas gestorDeReservas;
     RadioGroup radioGroup;
     ArrayList<Habitacion> habitaciones; // Declaración de la lista de habitaciones
 
@@ -58,7 +58,7 @@ public class Home extends AppCompatActivity {
         textHolaUsuario.setText("Hola " + nombre + "!");
 
 
-        reservaDA = new ReservaDataAccess(this);
+        gestorDeReservas = new GestorDeReservas(this);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.menu);
@@ -212,12 +212,12 @@ public class Home extends AppCompatActivity {
             Habitacion habitacionSeleccionada = habitaciones.get(selectedPosition);
             reserva.setHabitacion(habitacionSeleccionada);
 
-            if (reservaDA.tieneDisponiblidad(reserva)){
+            if (gestorDeReservas.tieneDisponibilidad(reserva)){
                 reserva.setAnulada(false);
                 reserva.setPagada(false);
                 reserva.setNotificadoAlCliente(false);
 
-                reservaDA.create(reserva);
+                gestorDeReservas.crearReserva(reserva);
 
                 Intent reservas = new Intent(this, Reservas.class);
                 startActivity(reservas);
