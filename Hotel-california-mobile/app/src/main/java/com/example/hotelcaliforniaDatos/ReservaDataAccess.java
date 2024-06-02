@@ -143,21 +143,9 @@ public class ReservaDataAccess implements IWritableDataAccess<Reserva> {
         return reservas;
     }
 
-    @Override
-    public void create(Reserva entidad) {
-        //"habitacionId", "clienteId", "chechIn", "checkOut", "notificadoAlCliente", "anulada","pagada"
-        //Creamos el registro a insertar como objeto ContentValues
-        ContentValues nuevoRegistro = new ContentValues();
-        nuevoRegistro.put("habitacionId", entidad.getHabitacion().getId());
-        nuevoRegistro.put("clienteId", entidad.getCliente().getId());
+    public Boolean tieneDisponiblidad(Reserva entidad){
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        nuevoRegistro.put("chechIn", formatoFecha.format(entidad.getCheckIn()));
-        nuevoRegistro.put("checkOut", formatoFecha.format(entidad.getCheckOut()));
-        nuevoRegistro.put("notificadoAlCliente", entidad.isNotificadoAlCliente());
-        nuevoRegistro.put("anulada", entidad.isAnulada());
-        nuevoRegistro.put("pagada", entidad.isPagada());
-
-        if (db != null) {
+        if (db != null){
             // Verificar si ya existe una reserva para esa habitación en las fechas dadas
             String query = "SELECT COUNT(*) FROM Reserva WHERE habitacionId = ? AND " +
                     "(? BETWEEN chechIn AND checkOut OR ? BETWEEN chechIn AND checkOut OR " +
@@ -178,12 +166,30 @@ public class ReservaDataAccess implements IWritableDataAccess<Reserva> {
                 int count = cursor.getInt(0);
                 cursor.close();
 
-                if (count > 0) {
-                    // Ya existe una reserva para esa habitación en las fechas
-                    return;
+                if (count == 0) {
+                    // No existe una reserva para esa habitación en las fechas
+                    return true;
                 }
             }
+        }
+        return false;
+    }
 
+    @Override
+    public void create(Reserva entidad) {
+        //"habitacionId", "clienteId", "chechIn", "checkOut", "notificadoAlCliente", "anulada","pagada"
+        //Creamos el registro a insertar como objeto ContentValues
+        ContentValues nuevoRegistro = new ContentValues();
+        nuevoRegistro.put("habitacionId", entidad.getHabitacion().getId());
+        nuevoRegistro.put("clienteId", entidad.getCliente().getId());
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        nuevoRegistro.put("chechIn", formatoFecha.format(entidad.getCheckIn()));
+        nuevoRegistro.put("checkOut", formatoFecha.format(entidad.getCheckOut()));
+        nuevoRegistro.put("notificadoAlCliente", entidad.isNotificadoAlCliente());
+        nuevoRegistro.put("anulada", entidad.isAnulada());
+        nuevoRegistro.put("pagada", entidad.isPagada());
+
+        if (db != null) {
             //Insertamos el registro en la base de datos
             db.insert("Reserva", null, nuevoRegistro);
         }
