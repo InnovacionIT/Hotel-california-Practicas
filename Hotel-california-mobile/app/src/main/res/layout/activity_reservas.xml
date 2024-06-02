@@ -94,11 +94,11 @@
 
     <Button
         android:id="@+id/buttonEliminar"
-        android:layout_width="104dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="24dp"
         android:backgroundTint="@color/gris"
         android:contentDescription="@string/btnEli"
         android:onClick="eliminar"
