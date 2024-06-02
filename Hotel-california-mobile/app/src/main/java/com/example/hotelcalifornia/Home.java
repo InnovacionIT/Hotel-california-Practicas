@@ -205,21 +205,27 @@ public class Home extends AppCompatActivity {
             }
             reserva.setCheckIn(fechaIngreso);
             reserva.setCheckOut(fechaEgreso);
-
             Cliente cliente = gestordeclientes.getClienteLogueado();
             reserva.setCliente(cliente);
 
             int selectedPosition = radioGroup.indexOfChild(findViewById(selectedRadioButtonId));
             Habitacion habitacionSeleccionada = habitaciones.get(selectedPosition);
             reserva.setHabitacion(habitacionSeleccionada);
-            reserva.setAnulada(false);
-            reserva.setPagada(false);
-            reserva.setNotificadoAlCliente(false);
 
-            reservaDA.create(reserva);
+            if (reservaDA.tieneDisponiblidad(reserva)){
+                reserva.setAnulada(false);
+                reserva.setPagada(false);
+                reserva.setNotificadoAlCliente(false);
 
-            Intent reservas = new Intent(this, Reservas.class);
-            startActivity(reservas);
+                reservaDA.create(reserva);
+
+                Intent reservas = new Intent(this, Reservas.class);
+                startActivity(reservas);
+            } else {
+                textErrorReservar.setText(R.string.mje_error_fecha_ya_reservada);
+            }
+
+
         }
     } //lleva a reservas
 
