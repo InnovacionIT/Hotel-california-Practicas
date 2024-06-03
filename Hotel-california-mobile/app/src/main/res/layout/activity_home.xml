@@ -1,199 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/radioButtonDoubleRoom"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:backgroundTint="@color/white"
-    tools:context=".Home">
+    tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/reservarButton"
-        android:layout_width="161dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="125dp"
-        android:layout_marginEnd="125dp"
-        android:layout_marginBottom="30dp"
-        android:backgroundTint="@color/naranja"
-        android:checkable="false"
-        android:contentDescription="@string/btnR"
-        android:gravity="center"
-        android:onClick="reservar"
-        android:text="@string/reservar"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TextContrastCheck" />
-
-    <EditText
-        android:id="@+id/fechaSal"
-        android:layout_width="185dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="@string/fechaE"
-        android:inputType="date"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSalida"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fechaIng" />
-
-    <TextView
-        android:id="@+id/reservasT"
-        android:layout_width="239dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="86dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginEnd="86dp"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        app:backgroundTint="@color/gris"
-        app:itemIconTint="@drawable/selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu">
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-    <Button
-        android:id="@+id/buttonIngreso"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="79dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="@color/azul"
-        android:contentDescription="@string/btnIngr"
-        android:onClick="fechaIngreso"
-        android:text="@string/ingreso"
-        android:textColorLink="@color/clear"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fechaIng"
-        app:layout_constraintTop_toTopOf="@+id/reservasT" />
-
-    <Button
-        android:id="@+id/buttonSalida"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="@color/azul"
-        android:contentDescription="@string/btnSali"
-        android:onClick="fechaSalida"
-        android:text="@string/salida"
-        android:textColorLink="@color/clear"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fechaSal"
-        app:layout_constraintTop_toBottomOf="@+id/buttonIngreso" />
-
-    <EditText
-        android:id="@+id/fechaIng"
-        android:layout_width="185dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="@string/fechaI"
-        android:inputType="date"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/buttonIngreso"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reservasT" />
-
-    <RadioGroup
-        android:id="@+id/RadioGroup"
-        android:layout_width="291dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="60dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/radioButtonDoubleRoom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSalida">
+        android:backgroundTint="@color/white"
+        tools:context=".Home">
 
-        <RadioButton
-            android:id="@+id/radioButtonNueva2"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/reservarButton"
+            android:layout_width="161dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="125dp"
+            android:layout_marginEnd="125dp"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="@color/naranja"
+            android:checkable="false"
+            android:contentDescription="@string/btnR"
+            android:gravity="center"
+            android:onClick="reservar"
+            android:text="@string/reservar"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="TextContrastCheck" />
+
+        <EditText
+            android:id="@+id/fechaSal"
+            android:layout_width="185dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="10dp"
+            android:ems="10"
+            android:hint="@string/fechaE"
+            android:inputType="date"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@+id/buttonSalida"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fechaIng" />
+
+        <TextView
+            android:id="@+id/reservasT"
+            android:layout_width="239dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="86dp"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="86dp"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            app:backgroundTint="@color/gris"
+            app:itemIconTint="@drawable/selector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_nav_menu">
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+        <Button
+            android:id="@+id/buttonIngreso"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="79dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="@color/azul"
+            android:contentDescription="@string/btnIngr"
+            android:onClick="fechaIngreso"
+            android:text="@string/ingreso"
+            android:textColorLink="@color/clear"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fechaIng"
+            app:layout_constraintTop_toTopOf="@+id/reservasT" />
+
+        <Button
+            android:id="@+id/buttonSalida"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="@color/azul"
+            android:contentDescription="@string/btnSali"
+            android:onClick="fechaSalida"
+            android:text="@string/salida"
+            android:textColorLink="@color/clear"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fechaSal"
+            app:layout_constraintTop_toBottomOf="@+id/buttonIngreso" />
+
+        <EditText
+            android:id="@+id/fechaIng"
+            android:layout_width="185dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="10dp"
+            android:ems="10"
+            android:hint="@string/fechaI"
+            android:inputType="date"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@+id/buttonIngreso"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reservasT" />
+
+        <RadioGroup
+            android:id="@+id/RadioGroup"
+            android:layout_width="291dp"
             android:layout_height="wrap_content"
-            android:text="@string/HabitacionDoble"
-            android:textAlignment="center" />
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="60dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSalida">
 
-        <RadioButton
-            android:id="@+id/radioButtonNueva1"
-            android:layout_width="match_parent"
+            <RadioButton
+                android:id="@+id/radioButtonNueva2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/HabitacionDoble"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButtonNueva1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/HabitacionCuadruple"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButtonSingleRoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/singleRoom"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButtonTripleRoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/triple"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/radioButtonSuiteExclusiva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/suite"
+                android:textAlignment="center" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textErrorReserva"
+            android:layout_width="0dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:textColor="@color/rojo"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@+id/reservarButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/RadioGroup" />
+
+        <TextView
+            android:id="@+id/holaUsuario"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/HabitacionCuadruple"
-            android:textAlignment="center" />
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioButton
-            android:id="@+id/radioButtonSingleRoom"
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabWhatsApp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/singleRoom"
-            android:textAlignment="center" />
-
-        <RadioButton
-            android:id="@+id/radioButtonTripleRoom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/triple"
-            android:textAlignment="center" />
-
-        <RadioButton
-            android:id="@+id/radioButtonSuiteExclusiva"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/suite"
-            android:textAlignment="center" />
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/textErrorReserva"
-        android:layout_width="0dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:textColor="@color/rojo"
-        android:textSize="16sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/reservarButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RadioGroup" />
-
-    <TextView
-        android:id="@+id/holaUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/verde_whatsapp"
+            android:contentDescription="@string/whatsapp"
+            android:tint="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.434"
+            app:layout_constraintStart_toEndOf="@+id/reservarButton"
+            app:layout_constraintTop_toBottomOf="@+id/textErrorReserva"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/wpp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
