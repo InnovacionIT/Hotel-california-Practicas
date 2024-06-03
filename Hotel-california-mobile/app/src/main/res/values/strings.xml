@@ -88,4 +88,5 @@
     <string name="name">Juan Perez</string>
     <string name="subject">Asunto</string>
     <string name="mje_error_fecha_ya_reservada">* La habitación ya está reservada para esa fecha.</string>
+    <string name="reserv_ahora">Reservá ahora!</string>
 </resources>
