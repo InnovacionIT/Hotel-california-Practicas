@@ -55,7 +55,7 @@ public class Home extends AppCompatActivity {
 
         // Establece un listener para el botón
         fabWhatsApp.setOnClickListener(view -> {
-            String phoneNumber = "5493513441382"; // El número de teléfono deseado con el código de país
+            String phoneNumber = "5493518592405"; // El número de teléfono deseado con el código de país
 
             // Mensaje predeterminado
             String message = "Hola, quiero hacer una consulta sobre la aplicación de Hotel California";
