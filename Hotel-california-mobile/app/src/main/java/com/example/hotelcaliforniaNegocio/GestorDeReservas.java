@@ -55,4 +55,15 @@ public class GestorDeReservas {
     public void modificarReserva(Reserva re) {
         reservaDA.update(re);
     }
+
+    public void crearReserva(Reserva reserva) { reservaDA.create(reserva); }
+
+    public boolean tieneDisponibilidad(Reserva reserva){
+        return reserva != null
+                && reserva.getCheckIn() != null
+                && reserva.getCheckOut() != null
+                && reserva.getHabitacion() != null
+                ? ((ReservaDataAccess)reservaDA).tieneDisponiblidad(reserva)
+                :  false;
+    }
 }

@@ -6,22 +6,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.hotelcaliforniaDatos.HabitacionDataAccess;
-import com.example.hotelcaliforniaDatos.ReservaDataAccess;
 import com.example.hotelcaliforniaModelo.Cliente;
 import com.example.hotelcaliforniaModelo.Habitacion;
 import com.example.hotelcaliforniaModelo.Reserva;
 import com.example.hotelcaliforniaNegocio.GestorDeClientes;
+import com.example.hotelcaliforniaNegocio.GestorDeReservas;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -37,7 +40,7 @@ public class Home extends AppCompatActivity {
     TextView textErrorReservar;
     BottomNavigationView bottomNavigationView;
     Button reservarButton;
-    ReservaDataAccess reservaDA;
+    GestorDeReservas gestorDeReservas;
     RadioGroup radioGroup;
     ArrayList<Habitacion> habitaciones; // Declaración de la lista de habitaciones
 
@@ -47,9 +50,36 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        // Encuentra el botón flotante
+        ImageButton fabWhatsApp = findViewById(R.id.fabWhatsApp);
+
+        // Establece un listener para el botón
+        fabWhatsApp.setOnClickListener(view -> {
+            String phoneNumber = "5493518592405"; // El número de teléfono deseado con el código de país
+
+            // Mensaje predeterminado
+            String message = "Hola, quiero hacer una consulta sobre la aplicación de Hotel California";
+
+            // Codifica el mensaje para que sea parte de la URL
+            try {
+                message = Uri.encode(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Construcción de la URL
+            String url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + message;
+            Log.d("WhatsAppURL", "URL: " + url);
+
+            // Intent para abrir el enlace en el navegador
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
+        });
+
         TextView textHolaUsuario = findViewById(R.id.holaUsuario);
 
         GestorDeClientes gestorDeClientes = new GestorDeClientes(this);
+
 
         String nombreCompleto = gestorDeClientes.getClienteLogueado().getUsuario();
         String[] partes = nombreCompleto.split(" "); // Divide el nombre completo en palabras usando un espacio en blanco como separador
@@ -58,7 +88,7 @@ public class Home extends AppCompatActivity {
         textHolaUsuario.setText("Hola " + nombre + "!");
 
 
-        reservaDA = new ReservaDataAccess(this);
+        gestorDeReservas = new GestorDeReservas(this);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.menu);
@@ -68,6 +98,9 @@ public class Home extends AppCompatActivity {
         radioGroup = findViewById(R.id.RadioGroup);
         reservarButton = findViewById(R.id.reservarButton);
         textErrorReservar = findViewById(R.id.textErrorReserva);
+
+
+        cargarHabitaciones();
 
         // Obtenemos todas las habitaciones para mostrarlas
         HabitacionDataAccess habitacionDataAccess = new HabitacionDataAccess(this);
@@ -106,6 +139,19 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+    private void cargarHabitaciones() {
+        HabitacionDataAccess habitacionDataAccess = new HabitacionDataAccess(this);
+        habitaciones = habitacionDataAccess.getAll();
+        radioGroup.removeAllViews();
+
+        for (Habitacion habitacion : habitaciones) {
+            RadioButton radioButton = new RadioButton(this);
+            String textoRadioButton = habitacion.getHabTipo() + " - $ " + habitacion.getHabPrecio();
+            radioButton.setText(textoRadioButton);
+            radioGroup.addView(radioButton);
+        }
+    }
+
     public void fechaIngreso (View view){
         fechaSal.setText("");
         Calendar calendar = Calendar.getInstance();
@@ -189,21 +235,27 @@ public class Home extends AppCompatActivity {
             }
             reserva.setCheckIn(fechaIngreso);
             reserva.setCheckOut(fechaEgreso);
-
             Cliente cliente = gestordeclientes.getClienteLogueado();
             reserva.setCliente(cliente);
 
             int selectedPosition = radioGroup.indexOfChild(findViewById(selectedRadioButtonId));
             Habitacion habitacionSeleccionada = habitaciones.get(selectedPosition);
             reserva.setHabitacion(habitacionSeleccionada);
-            reserva.setAnulada(false);
-            reserva.setPagada(false);
-            reserva.setNotificadoAlCliente(false);
 
-            reservaDA.create(reserva);
+            if (gestorDeReservas.tieneDisponibilidad(reserva)){
+                reserva.setAnulada(false);
+                reserva.setPagada(false);
+                reserva.setNotificadoAlCliente(false);
 
-            Intent reservas = new Intent(this, Reservas.class);
-            startActivity(reservas);
+                gestorDeReservas.crearReserva(reserva);
+
+                Intent reservas = new Intent(this, Reservas.class);
+                startActivity(reservas);
+            } else {
+                textErrorReservar.setText(R.string.mje_error_fecha_ya_reservada);
+            }
+
+
         }
     } //lleva a reservas
 
