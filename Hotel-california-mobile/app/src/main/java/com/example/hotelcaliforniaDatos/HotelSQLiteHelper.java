@@ -8,7 +8,7 @@ import com.example.hotelcalifornia.R;
 
 public class HotelSQLiteHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "DbHotelCaliforniaFinal";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
     private static HotelSQLiteHelper instance;
     private Context context;
     private SQLiteDatabase database;
