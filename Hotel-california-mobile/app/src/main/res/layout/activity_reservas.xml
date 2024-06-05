@@ -63,6 +63,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textCheckIn" />
 
+    <ImageView
+        android:id="@+id/imageHabitacion"
+        android:layout_width="401dp"
+        android:layout_height="177dp"
+        android:layout_marginTop="168dp"
+        android:contentDescription="@string/habitacion_imagen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTipoHab" />
+
     <Button
         android:id="@+id/buttonPagar"
         android:layout_width="wrap_content"

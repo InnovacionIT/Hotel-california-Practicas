@@ -14,6 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ImageView;
+import android.graphics.drawable.Drawable;
+import androidx.core.content.ContextCompat;
+
 
 import com.example.hotelcaliforniaModelo.Reserva;
 import com.example.hotelcaliforniaNegocio.GestorDeClientes;
@@ -26,8 +30,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class Reservas extends AppCompatActivity {
     Button buttonEliminar, buttonPagar;
@@ -37,6 +43,7 @@ public class Reservas extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     GestorDeReservas gestorDeReservas;
     Reserva reservaMostrandose;
+    ImageView imageHabitacion;
     private int reservaActualIndex = 0;
     public static final String RESERVA = "RESERVA_ID";
 
@@ -117,6 +124,9 @@ public class Reservas extends AppCompatActivity {
         buttonPagar = findViewById(R.id.buttonPagar);
         buttonPrevReserva = findViewById(R.id.buttonPrevReserva);
         buttonNextReserva = findViewById(R.id.buttonNextReserva);
+
+        //ImageView
+        imageHabitacion = findViewById(R.id.imageHabitacion);
     }
 
     private void mostrarElementosVisuales(boolean mostrar) {
@@ -151,8 +161,23 @@ public class Reservas extends AppCompatActivity {
         float precioTotal = gestorDeReservas.calculoPrecio(reservaMostrandose.getCheckIn(), reservaMostrandose.getCheckOut(), reservaMostrandose.getHabitacion().getHabPrecio());
         textViewMontoTotal.setText("$" + String.valueOf((int) precioTotal ));
 
+
+        imageHabitacion.setImageResource(obtenerImagenHabitacion(tipoHabitacion));
+
         actualizarVisualizacionSegunElEstadoDe(reservaMostrandose);
     }
+    private int obtenerImagenHabitacion(String tipoHabitacion) {
+        Map<String, Integer> imagenesHabitaciones = new HashMap<>();
+        imagenesHabitaciones.put("Single", R.drawable.singledoble); // Asocia "Single" con la imagen correspondiente
+        imagenesHabitaciones.put("Doble", R.drawable.suite);
+        imagenesHabitaciones.put("Suite", R.drawable.suiteii);
+        imagenesHabitaciones.put("Triple", R.drawable.triple);
+        imagenesHabitaciones.put("Cuadruple", R.drawable.cuadruple);
+
+        Integer imagenResId = imagenesHabitaciones.get(tipoHabitacion);
+        return (imagenResId != null) ? imagenResId : R.drawable.room; // Imagen por defecto si no se encuentra el tipo de habitación
+    }
+
 
     private void actualizarVisualizacionSegunElEstadoDe(Reserva reserva) {
         // Seteamos si los botones están habilitados o no.
